@@ -1,0 +1,47 @@
+{
+  "warning": "CURRENT BEHAVIOR CHARACTERIZATION — NOT SCIENTIFIC VALIDATION — NOT CLINICAL VALIDATION",
+  "fixtureVersion": 1,
+  "baselineCommit": "8b3538b06732d15c3dea207868fe4e1fe42c1a65",
+  "representativeIndicatorCases": [
+    { "drugId": "sertraline", "dose": 100, "indicator": "5HT", "value": 87.65949149981667, "rawNet": 136.08709400354994, "zone": "therapeutic" },
+    { "drugId": "sertraline", "dose": 100, "indicator": "s1", "value": -84.55037565673777, "rawNet": -124.01688881529928, "zone": "critical_low" },
+    { "drugId": "bupropion", "dose": 225, "indicator": "DA", "value": 43.09522852489376, "rawNet": 46.10655737704918, "zone": "therapeutic" },
+    { "drugId": "atomoxetine", "dose": 10, "indicator": "NA", "value": 66.40367702678492, "rawNet": 80, "zone": "therapeutic" },
+    { "drugId": "vortioxetine", "dose": 10, "indicator": "5HT", "value": 77.13379730057939, "rawNet": 102.36227041099262, "zone": "therapeutic" },
+    { "drugId": "cariprazine", "dose": 1.5, "indicator": "DA", "value": 17.076994803785517, "rawNet": 17.245963229045245, "zone": "mild_high" },
+    { "drugId": "pramipexole", "dose": 0.125, "indicator": "DA", "value": 20.58514611305919, "rawNet": 20.88353413654618, "zone": "mild_high" },
+    { "drugId": "ketamine", "dose": 0.5, "indicator": "Glu", "value": -3.634761678766127, "rawNet": -3.6363636363636367, "zone": "neutral" },
+    { "drugId": "memantine", "dose": 10, "indicator": "Glu", "value": -1.5383401723156411, "rawNet": -1.5384615384615385, "zone": "neutral" },
+    { "drugId": "lamotrigine", "dose": 25, "indicator": "Glu", "value": 33.63755443363322, "rawNet": 35, "zone": "therapeutic" }
+  ],
+  "zeroKiCases": [
+    { "drugId": "nac_supp", "dose": 1200, "indicator": "Glu", "roundedValue": 42 },
+    { "drugId": "lamotrigine", "dose": 200, "indicator": "Glu", "roundedValue": 34 },
+    { "drugId": "topiramate", "dose": 200, "indicator": "Glu", "roundedValue": -20 },
+    { "drugId": "riluzole", "dose": 100, "indicator": "Glu", "roundedValue": 10 }
+  ],
+  "legacy": {
+    "cyp2d6Combination": { "scheme": { "bupropion": 300, "fluoxetine": 20 }, "cypPercent": 95 },
+    "atomoxetineRealDose": { "scheme": { "atomoxetine": 40, "bupropion": 300 }, "value": 168 },
+    "vortioxetineRealDose": { "scheme": { "vortioxetine": 10, "bupropion": 300 }, "value": 18.8 },
+    "sertraline": { "sertOccupancy": 99.71083856815235, "globalSerotonin": 74.33293448997905, "dlPFCSerotonin": 88.93060125635657 },
+    "sigma": {
+      "agonist": { "scheme": { "fluvoxamine": 50 }, "net": 74.6268656716418 },
+      "inverseAgonist": { "scheme": { "sertraline": 100 }, "net": -74.07407407407408 },
+      "antagonist": { "scheme": { "progesterone": 100 }, "net": -73.52941176470588 }
+    }
+  },
+  "regional": {
+    "sertraline100Serotonin": { "dlPFC": 37.18514813811166, "insula": 84.3824936847205 }
+  },
+  "conditional": {
+    "sertraline100Triggered": [],
+    "amitriptyline75": { "triggered": ["ACh", "H1", "α1"], "acb": 3 },
+    "quetiapine100": { "triggered": ["H1", "α1"], "h1OccupancyRounded": 95 },
+    "topiramate200": { "triggered": ["GABA"], "gabaActivity": 50 }
+  },
+  "presetComparison": {
+    "presetA": { "scheme": { "sertraline": 100 }, "indicators": { "DA": 71, "NA": 31, "5-HT": 88, "Glu": 0, "σ1": -85, "CYP": 0, "ACh (ACB)": -15, "GABA": 0, "H1": 0, "α1": 0, "Opioid": 0 } },
+    "presetB": { "scheme": { "bupropion": 300, "lamotrigine": 200 }, "indicators": { "DA": 49, "NA": 21, "5-HT": 0, "Glu": 34, "σ1": 0, "CYP": -50, "ACh (ACB)": -15, "GABA": 0, "H1": 0, "α1": 0, "Opioid": 0 } }
+  }
+}

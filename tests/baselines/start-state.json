@@ -1,0 +1,16 @@
+{
+  "recordedAtLocalDate": "2026-08-31",
+  "repositoryRoot": "/Users/yurasachenko/CortexMD",
+  "branch": "main",
+  "head": "8b3538b06732d15c3dea207868fe4e1fe42c1a65",
+  "status": "clean",
+  "trackedModifications": [],
+  "untrackedFiles": [],
+  "packageManager": "npm",
+  "lockfile": "package-lock.json",
+  "lockfileSha256": "e8daee678c0891b8c7a2e98f06b8e6a5492646cd90a1a915218a2f7e88517175",
+  "brainGlbSha256": "8f0babae064319fd8d9520148ca5d31ce70938b2edd4db2dced960e4caffe8cf",
+  "brainGlbBytes": 43191068,
+  "nodeVersion": "v22.20.0",
+  "npmVersion": "11.11.0"
+}

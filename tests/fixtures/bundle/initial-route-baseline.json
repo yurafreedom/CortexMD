@@ -1,0 +1,36 @@
+{
+  "warning": "CURRENT BUNDLE CHARACTERIZATION — NOT A FUTURE PERFORMANCE TARGET",
+  "fixtureVersion": 1,
+  "baselineCommit": "8b3538b06732d15c3dea207868fe4e1fe42c1a65",
+  "route": "/",
+  "regressionAllowanceGzipBytes": 5120,
+  "metrics": {
+    "route": "/",
+    "httpStatus": 200,
+    "jsRawBytes": 1785618,
+    "jsGzipBytes": 474925,
+    "cssRawBytes": 59072,
+    "cssGzipBytes": 10413,
+    "jsPayloadSetSha256": "e1d06fe93f5b6a669928feafcdc67eaadf7f7e764c55f3a8b2300c4041d6712a",
+    "cssPayloadSetSha256": "3a2afe89a7584514d4148e2e44cc0b86f67ca7fd085ea8bba431c70bd7a1f029",
+    "initialAssetPayloadSetSha256": "3afb9cdc366db101515ae772957d77d74f6294f8efe1bb2ab792f052f84d0b33",
+    "htmlBytes": 44839,
+    "normalizedHtmlGzipBytes": 12978,
+    "initialAssetsGzipBytes": 498316,
+    "assetCount": 15,
+    "jsAssetCount": 14,
+    "cssAssetCount": 1,
+    "threeInInitialGraph": true,
+    "threeAssetCount": 1
+  },
+  "reproducibility": {
+    "cleanBuildsCompared": 2,
+    "result": "identical",
+    "normalization": [
+      "Next RSC bootstrap build identifier",
+      "HTML build-identifier directories",
+      "HTML chunk content-hash filenames"
+    ],
+    "payloadNormalization": "none"
+  }
+}

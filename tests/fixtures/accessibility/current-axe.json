@@ -1,0 +1,9 @@
+{
+  "warning": "CURRENT ACCESSIBILITY CHARACTERIZATION — NOT AN ACCESSIBILITY CERTIFICATION",
+  "fixtureVersion": 1,
+  "leftPanelCriticalOrSerious": [],
+  "schemeModalCriticalOrSerious": [
+    "serious:color-contrast",
+    "serious:scrollable-region-focusable"
+  ]
+}

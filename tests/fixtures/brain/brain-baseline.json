@@ -1,0 +1,24 @@
+{
+  "warning": "CURRENT ASSET CHARACTERIZATION — NOT A FUTURE PERFORMANCE TARGET",
+  "fixtureVersion": 1,
+  "baselineCommit": "8b3538b06732d15c3dea207868fe4e1fe42c1a65",
+  "asset": "public/brain.glb",
+  "metrics": {
+    "format": "glTF Binary",
+    "version": 2,
+    "sha256": "8f0babae064319fd8d9520148ca5d31ce70938b2edd4db2dced960e4caffe8cf",
+    "rawBytes": 43191068,
+    "scenes": 1,
+    "nodes": 1,
+    "meshes": 1,
+    "primitives": 1,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "vertices": 806949,
+    "triangles": 1165721,
+    "extensionsUsed": [],
+    "extensionsRequired": [],
+    "decodedGeometryBytesEstimate": 39811020
+  }
+}

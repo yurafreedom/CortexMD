@@ -1,0 +1,66 @@
+name: Phase 0 safety net
+
+on:
+  push:
+  pull_request:
+
+permissions: read-all
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  ADMIN_SESSION_SECRET: phase0-ci-only-not-a-production-secret-0001
+
+jobs:
+  deterministic-checks:
+    name: Typecheck, characterization, locales, and brain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run test:coverage
+      - run: npm run validate:locales
+      - run: npm run budget:brain
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          if-no-files-found: ignore
+
+  bundle-baseline:
+    name: Reproducible production bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run budget:bundle
+
+  chromium-e2e:
+    name: Chromium critical flows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failures
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
