@@ -1,0 +1,49 @@
+{
+  "warning": "CURRENT BEHAVIOR CHARACTERIZATION — NOT SCIENTIFIC VALIDATION — NOT CLINICAL VALIDATION",
+  "fixtureVersion": 1,
+  "baselineCommit": "6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b",
+  "humanReviewCases": [
+    { "decisionId": "HR-001", "drugId": "buspirone", "field": "doses", "v1": [5, 10, 15, 30], "v2": [5, 7.5, 10, 15, 30], "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-002", "drugId": "chlorpromazine", "field": "warn_dose", "v1": null, "v2": 400, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-003", "drugId": "clomipramine", "field": "warn_dose", "v1": null, "v2": 200, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-004", "drugId": "doxepin", "field": "warn_dose", "v1": null, "v2": 200, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-005", "drugId": "flupentixol", "field": "warn_dose", "v1": null, "v2": 9, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-006", "drugId": "fluphenazine", "field": "warn_dose", "v1": null, "v2": 20, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-007", "drugId": "haloperidol", "field": "warn_dose", "v1": null, "v2": 15, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-008", "drugId": "imipramine", "field": "warn_dose", "v1": null, "v2": 200, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-009", "drugId": "isocarboxazid", "field": "warn_dose", "v1": null, "v2": 50, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-010", "drugId": "loxapine", "field": "warn_dose", "v1": null, "v2": 100, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-011", "drugId": "maprotiline", "field": "warn_dose", "v1": null, "v2": 150, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-012", "drugId": "memantine", "field": "doses", "v1": [5, 10, 20], "v2": [5, 10, 20, 28], "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-013", "drugId": "memantine", "field": "max_dose", "v1": 20, "v2": 28, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-014", "drugId": "moclobemide", "field": "warn_dose", "v1": null, "v2": 450, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-015", "drugId": "perphenazine", "field": "warn_dose", "v1": null, "v2": 48, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-016", "drugId": "phenelzine", "field": "warn_dose", "v1": null, "v2": 75, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-017", "drugId": "pimozide", "field": "warn_dose", "v1": null, "v2": 8, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-018", "drugId": "riluzole", "field": "default_dose", "v1": 100, "v2": 50, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-019", "drugId": "thioridazine", "field": "warn_dose", "v1": null, "v2": 300, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-020", "drugId": "topiramate", "field": "doses", "v1": [25, 50, 100, 200], "v2": [25, 50, 100, 200, 400], "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-021", "drugId": "tranylcypromine", "field": "warn_dose", "v1": null, "v2": 50, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-022", "drugId": "trimipramine", "field": "warn_dose", "v1": null, "v2": 200, "status": "BLOCKS_MIGRATION" },
+    { "decisionId": "HR-023", "drugId": "zuclopenthixol", "field": "warn_dose", "v1": null, "v2": 75, "status": "BLOCKS_MIGRATION" }
+  ],
+  "zeroKiBindings": [
+    { "drugId": "lamotrigine", "receptor": "presynapticGluRelease", "type": "modulator", "source": "needs verification" },
+    { "drugId": "lamotrigine", "receptor": "Nav", "type": "modulator", "source": "Cheung et al. 1992" },
+    { "drugId": "nac_supp", "receptor": "cystineGlutamateAntiporter", "type": "modulator", "source": "Baker et al. 2003, system Xc-" },
+    { "drugId": "nac_supp", "receptor": "mGluR2", "type": "modulator", "source": "needs verification" },
+    { "drugId": "topiramate", "receptor": "AMPA", "type": "antagonist", "source": "needs verification" },
+    { "drugId": "topiramate", "receptor": "kainate", "type": "antagonist", "source": "needs verification" },
+    { "drugId": "topiramate", "receptor": "GABAa", "type": "modulator", "source": "needs verification" },
+    { "drugId": "topiramate", "receptor": "Nav", "type": "modulator", "source": "needs verification" },
+    { "drugId": "riluzole", "receptor": "glutamateUptake", "type": "modulator", "source": "needs verification" },
+    { "drugId": "riluzole", "receptor": "Nav", "type": "modulator", "source": "needs verification" },
+    { "drugId": "riluzole", "receptor": "NMDA", "type": "antagonist", "source": "needs verification" }
+  ],
+  "nonMgDoseUnits": [
+    { "drugId": "auvelity", "unit": "таб", "defaultDose": 1 },
+    { "drugId": "ketamine", "unit": "мг/кг", "defaultDose": 0.5 },
+    { "drugId": "b_vitamins", "unit": "комп", "defaultDose": 1 },
+    { "drugId": "vitamin_d", "unit": "МЕ", "defaultDose": 2000 }
+  ]
+}
