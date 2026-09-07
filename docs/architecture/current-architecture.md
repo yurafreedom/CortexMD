@@ -2,13 +2,13 @@
 
 > **CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE OR SCIENTIFIC VALIDATION**
 
-This atlas freezes repository state at `6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b` for Phase 1C / Wave 0. It describes behavior and dependency reachability; it does not approve the scientific content, clinical-looking text, or a future design.
+The historical characterization baseline is `6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b`. The current working-tree snapshot was generated on accepted Wave 0 commit `827749bece26c960c9e0a842f2ab0b7600b88eed` and includes uncommitted Wave 1 files; it does not claim that those files are contained in that commit. This atlas describes behavior and dependency reachability, not scientific or clinical validity.
 
 ## Scope and reproducibility
 
 - `scripts/audit-current-architecture.mjs --assert --json` parses TypeScript/JavaScript imports with the repository's TypeScript compiler. It resolves aliases, relative imports, re-exports, dynamic imports and `require`, and ignores `.DS_Store` metadata.
 - `scripts/audit-pharmacology-completeness.ts --assert` recomputes scientific-completeness facts from the live V1/V2 records.
-- `module-catalog.json` is the generated file-level catalog. Its synchronization with the live graph is tested.
+- `module-catalog.json` is the generated file-level working-tree catalog. Its summary and modules must match the live graph exactly; its characterization baseline and working-tree base commits must remain in current `HEAD` history.
 - Import-graph reachability is conservative. A reported risk is a review location, not proof of a runtime defect. Framework conventions and E2E-only coverage can exceed what source imports reveal.
 
 ## Current shape
@@ -26,26 +26,26 @@ Next.js routes and client page
   └─ assets / locale messages / styles
 ```
 
-There is no isolated pharmacology domain boundary today. Data, calculation, projection, persistence, AI serialization, and UI imports form a shared dependency cone.
+Current production data, calculation, projection, persistence, AI serialization, and UI imports still form a shared dependency cone. Wave 1 adds an isolated, unread pharmacology model/validation boundary, but no legacy adapter, canonical current dataset, repository, or production read path.
 
 ## Graph baseline
 
 | Measure | Current value |
 |---|---:|
-| Files catalogued under `src/` | 125 |
-| Runtime production modules | 122 |
+| Files catalogued under `src/` | 141 |
+| Runtime production modules | 138 |
 | Build-time/migration modules under `src/scripts/` | 3 |
-| Internal import edges | 236 |
+| Internal import edges | 273 |
 | Direct V1 / V2 / dual production consumers | 13 / 6 / 2 |
 | Transitive V1 / V2 / dual production consumers | 18 / 11 / 7 |
 | Pharmacology/scientific dependency modules | 43 |
 | Runtime circular dependencies | 0 |
 | Unresolved internal imports | 0 |
 | Server/client reachability review rows | 3 |
-| Barrel modules | 2 |
+| Barrel modules | 3 |
 | Heavy-package or full-data client reachability rows | 25 |
 | Deep cross-area alias/parent imports | 185 |
-| Top-level construction/expression review rows | 8 |
+| Top-level construction/expression review rows | 14 |
 | Static multi-responsibility candidates | 27 |
 
 The V1/V2 counts match the accepted discovery evidence. Type-only edges are catalogued but excluded from runtime cycle and transitive-runtime calculations.
@@ -54,13 +54,15 @@ The V1/V2 counts match the accepted discovery evidence. Type-only edges are cata
 
 - `src/app/admin/(auth)/AdminDashboard.tsx` imports a Next.js server action and therefore reaches `actions.ts`, `admin-session.ts`, and `supabase-server.ts`. The direct server-action import is an expected framework pattern; the three rows are retained as a boundary-review baseline, not declared violations.
 - Runtime cycles: none. The apparent `AdminDashboard.tsx` ↔ `page.tsx` loop is type-only in one direction and is not a runtime cycle.
-- The only barrels are `src/components/Brain3D/index.ts` and `src/components/IndicatorPopup/index.ts`. Both have one consumer (`src/app/page.tsx`). They are small today, but should not expand into implicit server/data/legacy surfaces.
+- The existing UI barrels are `src/components/Brain3D/index.ts` and `src/components/IndicatorPopup/index.ts`; both have one consumer (`src/app/page.tsx`). Wave 1 adds the unread, type-focused `src/domains/pharmacology/model/index.ts` public surface. None should expand into implicit server/data/legacy surfaces.
 - `src/app/page.tsx` reaches Three.js, Supabase, V1, and V2. `BrainCanvas.tsx` reaches Three.js. Twenty-three additional client modules reach a full V1 or V2 dataset and/or Supabase. This is a client bundle/reachability risk; import count by itself is not treated as a performance defect.
-- Top-level calls are reported for review. Several are deterministic initialization (`next/font`, schema construction, constant-set construction), not necessarily side effects. The three `src/scripts/*` rows are build-time only. No runtime optimization or dynamic-import change is authorized in Wave 0.
+- Top-level calls are reported for review. Several are deterministic initialization (`next/font` and schema construction), not necessarily side effects. The three `src/scripts/*` rows are build-time only. Wave 1 makes no runtime optimization or dynamic-import change.
 
 ## Deep pharmacology dependency cone
 
 Every cone file is listed below. The machine catalog adds exact imports, consumers, exports, import-graph test reach, risks, proposed destination, and wave.
+
+The additive Wave 1 foundational model and validators are intentionally outside the legacy/current-read dependency cone counted below: no production consumer imports them. They define no V2 importer, canonical current dataset, repository, PK/regional migration, or compatibility projection. They are nevertheless catalogued as `domain/pharmacology/model`, `domain/pharmacology/validation`, and domain documentation modules, and their Zod schema construction is visible in the top-level construction review.
 
 | Current file | Distinct current responsibilities / architectural mixing |
 |---|---|
@@ -124,21 +126,10 @@ Every cone file is listed below. The machine catalog adds exact imports, consume
 
 Current repository evidence: 116/116 IDs with exact parity; 349 parent bindings; 268 have a `source` string, including 261 literal `needs verification`; 81 have no source; 7 contain non-sentinel citation text; 0 are explicitly verified by the schema. There are 11 zero-Ki sentinels and 12 intrinsic-efficacy rows. All 580 main PK numeric fields are zero placeholders across 116 records; PET entries are 0. There are 3 metabolite records (8 bindings, 3 sourced bindings), 111 empty indication arrays, five dose-unit families, four non-mg records, seven target-normalization issue classes, 123 legacy-field divergences, and 23 unresolved `BLOCKS_MIGRATION` decisions.
 
-## Wave 1 readiness
+## Wave 1 working-tree status
 
-**READY, conditionally and only for additive, unread model/validation files.** Wave 0 now provides executable behavior contracts, a synchronized module catalog, import/cone diagnostics, persistence and AI boundary snapshots, and a completeness audit. That is sufficient to introduce `src/domains/pharmacology/model/*` and `src/domains/pharmacology/validation/*` without changing production reads.
+The current reviewable Wave 1 adds only the foundational canonical language and runtime validators under `src/domains/pharmacology`. It separates availability from derivation and curation, source identity from claim links, molecular targets from biological processes, affinity from functional interactions, and CYP facts from product policy. `CanonicalDrug` contains only identity, aliases, target interactions, and metabolism relationships.
 
-Before any production consumer, adapter, data, formula, persistence, AI, or UI switch, humans must decide:
+It does not map the 116 V2 records or their 349 bindings, interpret the 11 zero-Ki rows, migrate 580 PK placeholders, activate 259 V2-only bindings, model current regional/metabolite data, or resolve HR-001 through HR-023. There is no legacy adapter, repository, production consumer, formula, persistence, AI, API, or UI switch.
 
-1. `KnowledgeState` vocabulary and transitions.
-2. `EvidenceRef` identity, granularity and provenance requirements.
-3. Quantity/unit representation, including zero-vs-unknown and non-mg doses.
-4. `DrugId`, `TargetId`, alias, external-ID and mechanism identity rules.
-5. Dose concepts: selected quantity, regimen, indication/population bounds, warning and maximum.
-6. Warning type, source, severity, population and provenance.
-7. Separation of V1 regional narrative/intensity/harm from V2 membership/density.
-8. Separation of CYP mechanism facts from current interaction/exposure policy.
-9. Canonical server/client loading boundary so full scientific records are not implicitly pulled into every client.
-10. The 23 HR precedence decisions remain `BLOCKS_MIGRATION`.
-
-No Wave 1 code or production read switch is part of this atlas.
+Before any production read migration, humans must still approve the legacy-to-canonical mappings, identity/alias rules, evidence curation, zero-Ki interpretation, dose/warning policy, PK and regional models, active-metabolite design, repository/loading boundary, and all 23 behavior-critical precedence decisions.

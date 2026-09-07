@@ -10,15 +10,15 @@ The groups below cover the high-risk pharmacology cone and all import-graph mult
 
 **CURRENT RESPONSIBILITIES:** V1 legacy contracts; generated V2 data; scientific bindings; compatibility dose/warning fields; PK placeholders; evidence strings; CYP/metabolites; target/region identifiers; calculation policy weights and densities.
 
-**PROBLEM:** Facts, unknown/sentinel states, compatibility policy and calculation inputs are structurally co-located. V2 activation can introduce 259 unreviewed bindings and cannot distinguish verified, unresolved, missing or placeholder states.
+**PROBLEM:** Facts, unknown/sentinel states, compatibility policy and calculation inputs are structurally co-located. V2 activation can introduce 259 unreviewed bindings and cannot distinguish reviewed, unresolved, missing or placeholder states.
 
-**PROPOSED MODULES:** `model/ids.ts`, `model/knowledge-state.ts`, `model/evidence.ts`, `model/quantity.ts`, `model/binding.ts`, `model/drug.ts`, plus `validation/*`; later, curated-data loaders and a temporary V1 compatibility adapter.
+**IMPLEMENTED WAVE 1 FOUNDATION:** `model/ids.ts`, `model/knowledge.ts`, `model/evidence.ts`, `model/quantity.ts`, `model/target.ts`, `model/interaction.ts`, `model/metabolism.ts`, `model/drug.ts`, `model/index.ts`, plus responsibility-aligned `validation/*`. No current V2 record is canonicalized. Curated-data loaders, legacy adapters, and repositories require later authorization.
 
 **DEPENDENCY DIRECTION:** value model → validation; curated/raw input → validation → normalized model → calculations. Compatibility adapters depend on the model, never the reverse.
 
-**PUBLIC INTERFACE:** branded IDs, unit-tagged quantities, explicit evidence/knowledge states, validated immutable drug/binding inputs.
+**PUBLIC INTERFACE:** branded IDs, unit-tagged quantities, explicit evidence/knowledge states, and validated immutable drug/target-interaction inputs.
 
-**PRIVATE IMPLEMENTATION:** raw V1/V2 shape parsing, alias tables and generated-file details.
+**FUTURE PRIVATE IMPLEMENTATION:** raw V1/V2 shape parsing, reviewed alias tables, and generated-file details; none exists in Wave 1.
 
 **TEST BOUNDARY:** schema acceptance/rejection, identity/alias rules, units, missing/zero states, evidence state and fixture parity without production reads.
 
@@ -244,25 +244,27 @@ The groups below cover the high-risk pharmacology cone and all import-graph mult
 
 **ROLLBACK:** retain the current combined parser.
 
-## Wave 1 proposed files — not created
+## Wave 1 foundational files — current reviewable working tree
 
-Subject to human approval, the narrow additive Wave 1 surface would be:
+The narrow additive Wave 1 surface is:
 
 ```text
 src/domains/pharmacology/model/ids.ts
-src/domains/pharmacology/model/knowledge-state.ts
+src/domains/pharmacology/model/knowledge.ts
 src/domains/pharmacology/model/evidence.ts
 src/domains/pharmacology/model/quantity.ts
 src/domains/pharmacology/model/target.ts
-src/domains/pharmacology/model/binding.ts
+src/domains/pharmacology/model/interaction.ts
+src/domains/pharmacology/model/metabolism.ts
 src/domains/pharmacology/model/drug.ts
 src/domains/pharmacology/model/index.ts
-src/domains/pharmacology/validation/ids.ts
-src/domains/pharmacology/validation/quantity.ts
-src/domains/pharmacology/validation/evidence.ts
-src/domains/pharmacology/validation/binding.ts
+src/domains/pharmacology/validation/primitives.ts
+src/domains/pharmacology/validation/epistemics.ts
+src/domains/pharmacology/validation/target.ts
+src/domains/pharmacology/validation/interaction.ts
+src/domains/pharmacology/validation/metabolism.ts
 src/domains/pharmacology/validation/drug.ts
 src/domains/pharmacology/README.md
 ```
 
-No repository, adapter, data migration, calculation switch or production read is included in that proposed authorization.
+No repository, adapter, canonical current dataset, data migration, calculation switch, or production read is included. The 116 V2 records and 349 bindings remain legacy characterization, and the 259 V2-only rows remain unreviewed and inactive.

@@ -28,7 +28,7 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
   it('catalogues every non-metadata file under src with the required module fields', () => {
     expect(architecture.warning).toBe(warning);
     expect(architecture.modules.map((module: { path: string }) => module.path).sort()).toEqual(sourceFiles(path.join(root, 'src')));
-    expect(architecture.modules).toHaveLength(125);
+    expect(architecture.modules).toHaveLength(141);
     for (const module of architecture.modules) {
       expect(module).toEqual(expect.objectContaining({
         path: expect.any(String),
@@ -62,8 +62,8 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
 
   it('freezes the current runtime import graph and V1/V2 consumer counts', () => {
     expect(architecture.summary).toEqual(expect.objectContaining({
-      sourceFilesCatalogued: 125,
-      productionModulesCatalogued: 122,
+      sourceFilesCatalogued: 141,
+      productionModulesCatalogued: 138,
       buildTimeDiagnosticModules: 3,
       directV1ProductionConsumers: 13,
       directV2ProductionConsumers: 6,
@@ -75,7 +75,7 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
       circularDependencyCount: 0,
       unresolvedInternalImportCount: 0,
       serverClientBoundaryRiskCount: 3,
-      barrelModuleCount: 2,
+      barrelModuleCount: 3,
     }));
     expect(architecture.findings.serverClientBoundaryRisks).toEqual([
       { client: 'src/app/admin/(auth)/AdminDashboard.tsx', reachesServer: 'src/app/admin/(auth)/actions.ts' },
@@ -85,20 +85,31 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
     expect(architecture.findings.barrelModules.map((item: { file: string }) => item.file)).toEqual([
       'src/components/Brain3D/index.ts',
       'src/components/IndicatorPopup/index.ts',
+      'src/domains/pharmacology/model/index.ts',
     ]);
   });
 
-  it('keeps the committed module catalog synchronized with the live diagnostic', () => {
+  it('keeps the working-tree module catalog synchronized with the live diagnostic', () => {
     const catalog = JSON.parse(fs.readFileSync(path.join(root, 'docs/architecture/module-catalog.json'), 'utf8'));
     expect(catalog.warning).toBe(warning);
-    // The snapshot's source commit remains valid when acceptance advances HEAD.
-    // Git rejects both missing commits and commits outside the current history.
-    execFileSync('git', ['merge-base', '--is-ancestor', catalog.repositoryHead, 'HEAD'], {
+    expect(catalog.characterizationBaselineCommit).toBe('6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b');
+    expect(catalog.workingTreeBaseCommit).toBe('827749bece26c960c9e0a842f2ab0b7600b88eed');
+    expect(catalog.characterizationBaselineCommit).toBe(architecture.characterizationBaselineCommit);
+    expect(architecture.workingTreeBaseCommit).toBe(execFileSync('git', ['rev-parse', 'HEAD'], {
       cwd: root,
       encoding: 'utf8',
       timeout: 10_000,
       maxBuffer: 1024 * 1024,
-    });
+    }).trim());
+    for (const commit of [catalog.characterizationBaselineCommit, catalog.workingTreeBaseCommit]) {
+      // Git rejects missing commits and commits outside the current HEAD history.
+      execFileSync('git', ['merge-base', '--is-ancestor', commit, 'HEAD'], {
+        cwd: root,
+        encoding: 'utf8',
+        timeout: 10_000,
+        maxBuffer: 1024 * 1024,
+      });
+    }
     expect(catalog.summary).toEqual(architecture.summary);
     expect(catalog.modules).toEqual(architecture.modules);
   });

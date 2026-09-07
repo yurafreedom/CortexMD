@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
 const WARNING = 'CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE OR SCIENTIFIC VALIDATION';
+const CHARACTERIZATION_BASELINE_COMMIT = '6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDir, '..');
 const srcRoot = path.join(root, 'src');
@@ -139,6 +140,9 @@ function runtimeFor(file, directive) {
 }
 
 function layerFor(file) {
+  if (file.startsWith('src/domains/pharmacology/model/')) return 'domain/pharmacology/model';
+  if (file.startsWith('src/domains/pharmacology/validation/')) return 'domain/pharmacology/validation';
+  if (file === 'src/domains/pharmacology/README.md') return 'domain/pharmacology/documentation';
   if (file.startsWith('src/app/api/')) return 'application/API';
   if (file.startsWith('src/app/')) return 'application/route';
   if (file.startsWith('src/components/')) return `presentation/${file.split('/')[2]}`;
@@ -159,6 +163,9 @@ function layerFor(file) {
 
 function primaryResponsibility(file) {
   const base = path.basename(file).replace(/\.(tsx?|jsx?|mts|cts|mjs|cjs|json|css|ico)$/, '');
+  if (file.startsWith('src/domains/pharmacology/model/')) return `Define canonical pharmacology ${base} value contracts`;
+  if (file.startsWith('src/domains/pharmacology/validation/')) return `Validate canonical pharmacology ${base} values`;
+  if (file === 'src/domains/pharmacology/README.md') return 'Document the canonical pharmacology domain boundary';
   if (file.includes('/app/api/')) return `Handle the ${file.replace(/^src\/app\/api\//, '').replace(/\/route\.ts$/, '')} API boundary`;
   if (file.endsWith('/page.tsx')) return `Render/orchestrate the ${file.replace(/^src\/app\//, '').replace(/\/page\.tsx$/, '') || 'dashboard'} route`;
   if (file.endsWith('/layout.tsx')) return `Define the ${file.replace(/^src\/app\//, '').replace(/\/layout\.tsx$/, '') || 'root'} route layout`;
@@ -181,6 +188,7 @@ function primaryResponsibility(file) {
 }
 
 function proposedDomain(file) {
+  if (file.startsWith('src/domains/pharmacology/')) return 'retain in src/domains/pharmacology';
   if (file === 'src/data/drugs.ts') return 'src/domains/pharmacology/adapters/legacy-v1-data (temporary)';
   if (file === 'src/data/drugs.v2.ts') return 'src/domains/pharmacology/data/canonical-input (after review)';
   if (file === 'src/types/pharmacology.ts') return 'src/domains/pharmacology/model';
@@ -196,8 +204,11 @@ function proposedDomain(file) {
 }
 
 function plannedWave(file, v1, v2, pharmacology) {
+  if (file.startsWith('src/domains/pharmacology/model/')
+    || file.startsWith('src/domains/pharmacology/validation/')
+    || file === 'src/domains/pharmacology/README.md') return 'Wave 1 additive model/validation; no production read switch';
   if (file.startsWith('src/scripts/')) return 'Wave 0 diagnostics; destructive migration script disposition in Wave 8';
-  if (file === 'src/types/pharmacology.ts' || file === 'src/data/drugs.v2.ts') return 'Wave 1 model/validation input (no read switch)';
+  if (file === 'src/types/pharmacology.ts' || file === 'src/data/drugs.v2.ts') return 'future reviewed adapter/migration input; not canonicalized in Wave 1';
   if (file === 'src/data/drugs.ts') return 'Wave 8 deletion only after all gates';
   if (file.includes('/api/chat/') || file.includes('/api/profile/') || file.includes('TreatmentHistory') || file.includes('useScheme')) return pharmacology ? 'Wave 6 persistence/API/AI' : 'outside bounded pharmacology migration';
   if (file.includes('DrugCatalog') || file.includes('ActiveScheme') || file.includes('DoseSlider')) return 'Wave 5 behavior-critical dose/warning UI';
@@ -366,8 +377,10 @@ const modules = files.map((file) => {
   const v1 = file === v1File ? 'source/self' : reachable.has(v1File) || info.runtimeInternalDependencies.includes(v1File) ? (info.runtimeInternalDependencies.includes(v1File) ? 'direct' : 'transitive') : 'none';
   const v2 = file === v2File ? 'source/self' : reachable.has(v2File) || info.runtimeInternalDependencies.includes(v2File) ? (info.runtimeInternalDependencies.includes(v2File) ? 'direct' : 'transitive') : 'none';
   const scientific = dependencyState(file, (candidate) => scientificDataFiles.has(candidate));
+  const canonicalKnowledgeVocabulary = file === 'src/domains/pharmacology/model/knowledge.ts';
   const heuristic = file === 'src/lib/pharmacology.ts' || file === 'src/lib/sigma1.ts' || file.startsWith('src/lib/indicators/')
-    || (parseableExtensions.has(path.extname(file)) && /heuristic|approximation|fallback|placeholder/i.test(info.sourceText));
+    || (!canonicalKnowledgeVocabulary && parseableExtensions.has(path.extname(file))
+      && /heuristic|approximation|fallback|placeholder/i.test(info.sourceText));
   const persistence = noteState(file, persistenceMarkers);
   const ai = noteState(file, aiMarkers);
   const visualization = noteState(file, visualizationMarkers);
@@ -440,9 +453,9 @@ const multiResponsibilityModules = modules
     && module.secondaryResponsibilities.length >= 2)
   .map((module) => module.path);
 
-let head = 'unavailable';
+let workingTreeBaseCommit = 'unavailable';
 try {
-  head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+  workingTreeBaseCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
 } catch {
   // Read-only report remains usable outside Git.
 }
@@ -450,7 +463,8 @@ try {
 const report = {
   warning: WARNING,
   repositoryRoot: root,
-  repositoryHead: head,
+  characterizationBaselineCommit: CHARACTERIZATION_BASELINE_COMMIT,
+  workingTreeBaseCommit,
   summary: {
     sourceFilesCatalogued: modules.length,
     productionModulesCatalogued: productionModules.length,
@@ -501,7 +515,8 @@ if (process.argv.includes('--assert')) {
 if (process.argv.includes('--catalog-json')) {
   console.log(JSON.stringify({
     warning: report.warning,
-    repositoryHead: report.repositoryHead,
+    characterizationBaselineCommit: report.characterizationBaselineCommit,
+    workingTreeBaseCommit: report.workingTreeBaseCommit,
     summary: report.summary,
     modules: report.modules,
   }, null, 2));

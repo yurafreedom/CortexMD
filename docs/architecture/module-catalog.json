@@ -1,11 +1,12 @@
 {
   "warning": "CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE OR SCIENTIFIC VALIDATION",
-  "repositoryHead": "6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b",
+  "characterizationBaselineCommit": "6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b",
+  "workingTreeBaseCommit": "827749bece26c960c9e0a842f2ab0b7600b88eed",
   "summary": {
-    "sourceFilesCatalogued": 125,
-    "productionModulesCatalogued": 122,
+    "sourceFilesCatalogued": 141,
+    "productionModulesCatalogued": 138,
     "buildTimeDiagnosticModules": 3,
-    "internalEdges": 236,
+    "internalEdges": 273,
     "externalImportSpecifiers": [
       "@anthropic-ai/sdk",
       "@supabase/ssr",
@@ -40,10 +41,10 @@
     "circularDependencyCount": 0,
     "unresolvedInternalImportCount": 0,
     "serverClientBoundaryRiskCount": 3,
-    "barrelModuleCount": 2,
+    "barrelModuleCount": 3,
     "heavyClientDependencyRiskCount": 25,
     "deepCrossDomainImportCount": 185,
-    "topLevelSideEffectModuleCount": 8,
+    "topLevelSideEffectModuleCount": 14,
     "multiResponsibilityModuleCount": 27
   },
   "modules": [
@@ -4105,7 +4106,7 @@
       "knownGaps": [],
       "knownRisks": [],
       "proposedFutureDomainModule": "src/domains/pharmacology/data/canonical-input (after review)",
-      "plannedMigrationWave": "Wave 1 model/validation input (no read switch)"
+      "plannedMigrationWave": "future reviewed adapter/migration input; not canonicalized in Wave 1"
     },
     {
       "path": "src/data/glutamateCascade.ts",
@@ -4395,6 +4396,934 @@
       ],
       "proposedFutureDomainModule": "domain-owned data module (future boundary review)",
       "plannedMigrationWave": "outside Phase 1 pharmacology scope"
+    },
+    {
+      "path": "src/domains/pharmacology/README.md",
+      "layerDomain": "domain/pharmacology/documentation",
+      "runtime": "asset/data",
+      "primaryResponsibility": "Document the canonical pharmacology domain boundary",
+      "responsibilityDetails": [
+        "Document the canonical pharmacology domain boundary"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [],
+      "importantInputs": [],
+      "importantOutputs": [
+        "module side effect/data consumed through framework convention"
+      ],
+      "sideEffects": [],
+      "directDependencies": [],
+      "importantConsumers": [],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "no current import-graph test reach",
+      "knownGaps": [
+        "no current import path from tests; framework/E2E coverage may still exist"
+      ],
+      "knownRisks": [
+        "no import-graph test reach"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/drug.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology drug value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology drug value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "CANONICAL_PHARMACOLOGY_MODEL_VERSION",
+        "CanonicalDrug"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/model/metabolism.ts"
+      ],
+      "importantOutputs": [
+        "CANONICAL_PHARMACOLOGY_MODEL_VERSION",
+        "CanonicalDrug"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/model/metabolism.ts"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/validation/drug.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/evidence.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology evidence value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology evidence value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "EVIDENCE_RELATIONS",
+        "EVIDENCE_SOURCE_TYPES",
+        "EvidenceBacked",
+        "EvidenceExternalIdentifier",
+        "EvidenceLink",
+        "EvidenceLocator",
+        "EvidenceMetadataValue",
+        "EvidenceRef",
+        "EvidenceRelation",
+        "EvidenceSourceType"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/knowledge.ts"
+      ],
+      "importantOutputs": [
+        "EVIDENCE_RELATIONS",
+        "EVIDENCE_SOURCE_TYPES",
+        "EvidenceBacked",
+        "EvidenceExternalIdentifier",
+        "EvidenceLink",
+        "EvidenceLocator",
+        "EvidenceMetadataValue",
+        "EvidenceRef",
+        "EvidenceRelation",
+        "EvidenceSourceType"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/knowledge.ts"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/model/metabolism.ts",
+        "src/domains/pharmacology/validation/epistemics.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "transitive test reach",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/ids.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology ids value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology ids value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "BiologicalProcessId",
+        "DrugId",
+        "EvidenceId",
+        "MolecularTargetId"
+      ],
+      "importantInputs": [],
+      "importantOutputs": [
+        "BiologicalProcessId",
+        "DrugId",
+        "EvidenceId",
+        "MolecularTargetId"
+      ],
+      "sideEffects": [],
+      "directDependencies": [],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/model/target.ts",
+        "src/domains/pharmacology/validation/primitives.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/index.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology index value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology index value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "AffinityInteraction",
+        "BiologicalProcessId",
+        "BiologicalProcessRef",
+        "CANONICAL_PHARMACOLOGY_MODEL_VERSION",
+        "CURATION_STATUSES",
+        "CYP_RELATIONSHIP_KINDS",
+        "CYP_STRENGTHS",
+        "CanonicalDrug",
+        "ConflictCandidate",
+        "CurationStatus",
+        "CypRelationship",
+        "CypRelationshipKind",
+        "CypStrength",
+        "DERIVATION_KINDS",
+        "DerivationKind",
+        "DrugId",
+        "EVIDENCE_RELATIONS",
+        "EVIDENCE_SOURCE_TYPES",
+        "EvidenceBacked",
+        "EvidenceExternalIdentifier",
+        "EvidenceId",
+        "EvidenceLink",
+        "EvidenceLocator",
+        "EvidenceMetadataValue",
+        "EvidenceRef",
+        "EvidenceRelation",
+        "EvidenceSourceType",
+        "FUNCTIONAL_DIRECTIONS",
+        "FunctionalDirection",
+        "FunctionalInteraction",
+        "KNOWLEDGE_STATES",
+        "Knowledge",
+        "KnowledgeState",
+        "MOLECULAR_TARGET_KINDS",
+        "MolecularTargetId",
+        "MolecularTargetKind",
+        "MolecularTargetRef",
+        "PHARMACOLOGICAL_MODES",
+        "PharmacologicalMode",
+        "PharmacologyTargetRef",
+        "QUANTITY_UNITS",
+        "Quantity",
+        "QuantityUnit",
+        "TargetInteraction"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/model/knowledge.ts",
+        "src/domains/pharmacology/model/metabolism.ts",
+        "src/domains/pharmacology/model/quantity.ts",
+        "src/domains/pharmacology/model/target.ts"
+      ],
+      "importantOutputs": [
+        "AffinityInteraction",
+        "BiologicalProcessId",
+        "BiologicalProcessRef",
+        "CANONICAL_PHARMACOLOGY_MODEL_VERSION",
+        "CURATION_STATUSES",
+        "CYP_RELATIONSHIP_KINDS",
+        "CYP_STRENGTHS",
+        "CanonicalDrug",
+        "ConflictCandidate",
+        "CurationStatus",
+        "CypRelationship",
+        "CypRelationshipKind",
+        "CypStrength",
+        "DERIVATION_KINDS",
+        "DerivationKind",
+        "DrugId",
+        "EVIDENCE_RELATIONS",
+        "EVIDENCE_SOURCE_TYPES",
+        "EvidenceBacked",
+        "EvidenceExternalIdentifier",
+        "EvidenceId",
+        "EvidenceLink",
+        "EvidenceLocator",
+        "EvidenceMetadataValue",
+        "EvidenceRef",
+        "EvidenceRelation",
+        "EvidenceSourceType",
+        "FUNCTIONAL_DIRECTIONS",
+        "FunctionalDirection",
+        "FunctionalInteraction",
+        "KNOWLEDGE_STATES",
+        "Knowledge",
+        "KnowledgeState",
+        "MOLECULAR_TARGET_KINDS",
+        "MolecularTargetId",
+        "MolecularTargetKind",
+        "MolecularTargetRef",
+        "PHARMACOLOGICAL_MODES",
+        "PharmacologicalMode",
+        "PharmacologyTargetRef",
+        "QUANTITY_UNITS",
+        "Quantity",
+        "QuantityUnit",
+        "TargetInteraction"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/model/knowledge.ts",
+        "src/domains/pharmacology/model/metabolism.ts",
+        "src/domains/pharmacology/model/quantity.ts",
+        "src/domains/pharmacology/model/target.ts"
+      ],
+      "importantConsumers": [],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "no current import-graph test reach",
+      "knownGaps": [
+        "no current import path from tests; framework/E2E coverage may still exist"
+      ],
+      "knownRisks": [
+        "no import-graph test reach"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/interaction.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology interaction value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology interaction value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "AffinityInteraction",
+        "FUNCTIONAL_DIRECTIONS",
+        "FunctionalDirection",
+        "FunctionalInteraction",
+        "PHARMACOLOGICAL_MODES",
+        "PharmacologicalMode",
+        "TargetInteraction"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/quantity.ts",
+        "src/domains/pharmacology/model/target.ts"
+      ],
+      "importantOutputs": [
+        "AffinityInteraction",
+        "FUNCTIONAL_DIRECTIONS",
+        "FunctionalDirection",
+        "FunctionalInteraction",
+        "PHARMACOLOGICAL_MODES",
+        "PharmacologicalMode",
+        "TargetInteraction"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/quantity.ts",
+        "src/domains/pharmacology/model/target.ts"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/validation/interaction.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "transitive test reach",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/knowledge.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology knowledge value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology knowledge value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "CURATION_STATUSES",
+        "ConflictCandidate",
+        "CurationStatus",
+        "DERIVATION_KINDS",
+        "DerivationKind",
+        "KNOWLEDGE_STATES",
+        "Knowledge",
+        "KnowledgeState"
+      ],
+      "importantInputs": [],
+      "importantOutputs": [
+        "CURATION_STATUSES",
+        "ConflictCandidate",
+        "CurationStatus",
+        "DERIVATION_KINDS",
+        "DerivationKind",
+        "KNOWLEDGE_STATES",
+        "Knowledge",
+        "KnowledgeState"
+      ],
+      "sideEffects": [],
+      "directDependencies": [],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/validation/epistemics.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/metabolism.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology metabolism value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology metabolism value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "CYP_RELATIONSHIP_KINDS",
+        "CYP_STRENGTHS",
+        "CypRelationship",
+        "CypRelationshipKind",
+        "CypStrength"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/target.ts"
+      ],
+      "importantOutputs": [
+        "CYP_RELATIONSHIP_KINDS",
+        "CYP_STRENGTHS",
+        "CypRelationship",
+        "CypRelationshipKind",
+        "CypStrength"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/target.ts"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/validation/metabolism.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/quantity.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology quantity value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology quantity value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "QUANTITY_UNITS",
+        "Quantity",
+        "QuantityUnit"
+      ],
+      "importantInputs": [],
+      "importantOutputs": [
+        "QUANTITY_UNITS",
+        "Quantity",
+        "QuantityUnit"
+      ],
+      "sideEffects": [],
+      "directDependencies": [],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/validation/primitives.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "transitive test reach",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/model/target.ts",
+      "layerDomain": "domain/pharmacology/model",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define canonical pharmacology target value contracts",
+      "responsibilityDetails": [
+        "Define canonical pharmacology target value contracts"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "BiologicalProcessRef",
+        "MOLECULAR_TARGET_KINDS",
+        "MolecularTargetKind",
+        "MolecularTargetRef",
+        "PharmacologyTargetRef"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/ids.ts"
+      ],
+      "importantOutputs": [
+        "BiologicalProcessRef",
+        "MOLECULAR_TARGET_KINDS",
+        "MolecularTargetKind",
+        "MolecularTargetRef",
+        "PharmacologyTargetRef"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/model/ids.ts"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/model/metabolism.ts",
+        "src/domains/pharmacology/validation/target.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/validation/drug.ts",
+      "layerDomain": "domain/pharmacology/validation",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Validate canonical pharmacology drug values",
+      "responsibilityDetails": [
+        "Validate canonical pharmacology drug values"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "canonicalDrugSchema"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/validation/interaction.ts",
+        "src/domains/pharmacology/validation/metabolism.ts",
+        "src/domains/pharmacology/validation/primitives.ts"
+      ],
+      "importantOutputs": [
+        "canonicalDrugSchema"
+      ],
+      "sideEffects": [
+        "top-level call in requiredText",
+        "top-level call in canonicalDrugSchema"
+      ],
+      "directDependencies": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/validation/interaction.ts",
+        "src/domains/pharmacology/validation/metabolism.ts",
+        "src/domains/pharmacology/validation/primitives.ts",
+        "zod"
+      ],
+      "importantConsumers": [],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [
+        "top-level side effect/construction"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/validation/epistemics.ts",
+      "layerDomain": "domain/pharmacology/validation",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Validate canonical pharmacology epistemics values",
+      "responsibilityDetails": [
+        "Validate canonical pharmacology epistemics values"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "curationStatusSchema",
+        "derivationKindSchema",
+        "evidenceBackedSchema",
+        "evidenceExternalIdentifierSchema",
+        "evidenceLinkSchema",
+        "evidenceLocatorSchema",
+        "evidenceRefSchema",
+        "knowledgeSchema"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/knowledge.ts",
+        "src/domains/pharmacology/validation/primitives.ts"
+      ],
+      "importantOutputs": [
+        "curationStatusSchema",
+        "derivationKindSchema",
+        "evidenceBackedSchema",
+        "evidenceExternalIdentifierSchema",
+        "evidenceLinkSchema",
+        "evidenceLocatorSchema",
+        "evidenceRefSchema",
+        "knowledgeSchema"
+      ],
+      "sideEffects": [
+        "top-level call in requiredText",
+        "top-level call in optionalText",
+        "top-level call in derivationKindSchema",
+        "top-level call in curationStatusSchema",
+        "top-level call in evidenceExternalIdentifierSchema",
+        "top-level call in evidenceRefSchema",
+        "top-level call in evidenceLocatorSchema",
+        "top-level call in evidenceLinkSchema"
+      ],
+      "directDependencies": [
+        "src/domains/pharmacology/model/evidence.ts",
+        "src/domains/pharmacology/model/knowledge.ts",
+        "src/domains/pharmacology/validation/primitives.ts",
+        "zod"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/validation/interaction.ts",
+        "src/domains/pharmacology/validation/metabolism.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [
+        "top-level side effect/construction"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/validation/interaction.ts",
+      "layerDomain": "domain/pharmacology/validation",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Validate canonical pharmacology interaction values",
+      "responsibilityDetails": [
+        "Validate canonical pharmacology interaction values"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "affinityInteractionSchema",
+        "functionalInteractionSchema",
+        "targetInteractionSchema"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/validation/epistemics.ts",
+        "src/domains/pharmacology/validation/primitives.ts",
+        "src/domains/pharmacology/validation/target.ts"
+      ],
+      "importantOutputs": [
+        "affinityInteractionSchema",
+        "functionalInteractionSchema",
+        "targetInteractionSchema"
+      ],
+      "sideEffects": [
+        "top-level call in affinitySchema",
+        "top-level call in pharmacologicalModeSchema",
+        "top-level call in intrinsicEfficacySchema",
+        "top-level call in affinityInteractionSchema",
+        "top-level call in functionalInteractionSchema",
+        "top-level call in targetInteractionSchema"
+      ],
+      "directDependencies": [
+        "src/domains/pharmacology/model/interaction.ts",
+        "src/domains/pharmacology/validation/epistemics.ts",
+        "src/domains/pharmacology/validation/primitives.ts",
+        "src/domains/pharmacology/validation/target.ts",
+        "zod"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/validation/drug.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [
+        "top-level side effect/construction"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/validation/metabolism.ts",
+      "layerDomain": "domain/pharmacology/validation",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Validate canonical pharmacology metabolism values",
+      "responsibilityDetails": [
+        "Validate canonical pharmacology metabolism values"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "cypRelationshipSchema"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/metabolism.ts",
+        "src/domains/pharmacology/validation/epistemics.ts",
+        "src/domains/pharmacology/validation/target.ts"
+      ],
+      "importantOutputs": [
+        "cypRelationshipSchema"
+      ],
+      "sideEffects": [
+        "top-level call in cypEnzymeSchema",
+        "top-level call in cypRelationshipSchema"
+      ],
+      "directDependencies": [
+        "src/domains/pharmacology/model/metabolism.ts",
+        "src/domains/pharmacology/validation/epistemics.ts",
+        "src/domains/pharmacology/validation/target.ts",
+        "zod"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/validation/drug.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [
+        "top-level side effect/construction"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/validation/primitives.ts",
+      "layerDomain": "domain/pharmacology/validation",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Validate canonical pharmacology primitives values",
+      "responsibilityDetails": [
+        "Validate canonical pharmacology primitives values"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "biologicalProcessIdSchema",
+        "drugIdSchema",
+        "evidenceIdSchema",
+        "molecularTargetIdSchema",
+        "positiveQuantitySchema",
+        "quantitySchema",
+        "quantitySchemaFor",
+        "quantityUnitSchema"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/quantity.ts"
+      ],
+      "importantOutputs": [
+        "biologicalProcessIdSchema",
+        "drugIdSchema",
+        "evidenceIdSchema",
+        "molecularTargetIdSchema",
+        "positiveQuantitySchema",
+        "quantitySchema",
+        "quantitySchemaFor",
+        "quantityUnitSchema"
+      ],
+      "sideEffects": [
+        "top-level call in drugIdSchema",
+        "top-level call in molecularTargetIdSchema",
+        "top-level call in biologicalProcessIdSchema",
+        "top-level call in evidenceIdSchema",
+        "top-level call in quantityUnitSchema",
+        "top-level call in quantitySchema"
+      ],
+      "directDependencies": [
+        "src/domains/pharmacology/model/ids.ts",
+        "src/domains/pharmacology/model/quantity.ts",
+        "zod"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/validation/drug.ts",
+        "src/domains/pharmacology/validation/epistemics.ts",
+        "src/domains/pharmacology/validation/interaction.ts",
+        "src/domains/pharmacology/validation/target.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [
+        "top-level side effect/construction"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+    },
+    {
+      "path": "src/domains/pharmacology/validation/target.ts",
+      "layerDomain": "domain/pharmacology/validation",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Validate canonical pharmacology target values",
+      "responsibilityDetails": [
+        "Validate canonical pharmacology target values"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "biologicalProcessRefSchema",
+        "molecularTargetRefSchema",
+        "pharmacologyTargetRefSchema"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/target.ts",
+        "src/domains/pharmacology/validation/primitives.ts"
+      ],
+      "importantOutputs": [
+        "biologicalProcessRefSchema",
+        "molecularTargetRefSchema",
+        "pharmacologyTargetRefSchema"
+      ],
+      "sideEffects": [
+        "top-level call in optionalLabel",
+        "top-level call in molecularTargetRefSchema",
+        "top-level call in biologicalProcessRefSchema",
+        "top-level call in pharmacologyTargetRefSchema"
+      ],
+      "directDependencies": [
+        "src/domains/pharmacology/model/target.ts",
+        "src/domains/pharmacology/validation/primitives.ts",
+        "zod"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/validation/interaction.ts",
+        "src/domains/pharmacology/validation/metabolism.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [
+        "top-level side effect/construction"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
     },
     {
       "path": "src/hooks/useAuth.ts",
@@ -6477,7 +7406,7 @@
       "knownGaps": [],
       "knownRisks": [],
       "proposedFutureDomainModule": "src/domains/pharmacology/model",
-      "plannedMigrationWave": "Wave 1 model/validation input (no read switch)"
+      "plannedMigrationWave": "future reviewed adapter/migration input; not canonicalized in Wave 1"
     }
   ]
 }
