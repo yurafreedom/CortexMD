@@ -1,12 +1,12 @@
 {
   "warning": "CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE OR SCIENTIFIC VALIDATION",
   "characterizationBaselineCommit": "6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b",
-  "workingTreeBaseCommit": "827749bece26c960c9e0a842f2ab0b7600b88eed",
+  "workingTreeBaseCommit": "657e5692c1e80e428dbf3bcf4b8e745ac0db226f",
   "summary": {
-    "sourceFilesCatalogued": 141,
-    "productionModulesCatalogued": 138,
+    "sourceFilesCatalogued": 144,
+    "productionModulesCatalogued": 141,
     "buildTimeDiagnosticModules": 3,
-    "internalEdges": 273,
+    "internalEdges": 281,
     "externalImportSpecifiers": [
       "@anthropic-ai/sdk",
       "@supabase/ssr",
@@ -31,19 +31,19 @@
       "three/examples/jsm/loaders/GLTFLoader.js",
       "zod"
     ],
-    "directV1ProductionConsumers": 13,
+    "directV1ProductionConsumers": 14,
     "directV2ProductionConsumers": 6,
     "directDualProductionConsumers": 2,
-    "transitiveV1ProductionConsumers": 18,
+    "transitiveV1ProductionConsumers": 19,
     "transitiveV2ProductionConsumers": 11,
     "transitiveDualProductionConsumers": 7,
-    "pharmacologyDependencyModules": 43,
+    "pharmacologyDependencyModules": 44,
     "circularDependencyCount": 0,
     "unresolvedInternalImportCount": 0,
     "serverClientBoundaryRiskCount": 3,
-    "barrelModuleCount": 3,
+    "barrelModuleCount": 4,
     "heavyClientDependencyRiskCount": 25,
-    "deepCrossDomainImportCount": 185,
+    "deepCrossDomainImportCount": 186,
     "topLevelSideEffectModuleCount": 14,
     "multiResponsibilityModuleCount": 27
   },
@@ -4038,6 +4038,7 @@
         "src/components/Panels/ZonePopup.tsx",
         "src/components/Presets/PresetComparisonModal.tsx",
         "src/components/Sigma1/CascadeOverlay.tsx",
+        "src/domains/pharmacology/compatibility/current-read-repository.ts",
         "src/hooks/useScheme.ts",
         "src/lib/pharmacology.ts",
         "src/lib/sigma1.ts",
@@ -4430,7 +4431,57 @@
         "no import-graph test reach"
       ],
       "proposedFutureDomainModule": "retain in src/domains/pharmacology",
-      "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
+      "plannedMigrationWave": "Wave 2 additive read boundary; no production consumer switch"
+    },
+    {
+      "path": "src/domains/pharmacology/compatibility/current-read-repository.ts",
+      "layerDomain": "domain/pharmacology/compatibility",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Project current-compatible V1 records behind the private canonical read adapter",
+      "responsibilityDetails": [
+        "Project current-compatible V1 records behind the private canonical read adapter",
+        "transitive scientific-data dependency"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "CurrentCompatibilityDataError",
+        "CurrentCompatibilityDataErrorCode",
+        "createCurrentCompatibilityDrugReadRepository"
+      ],
+      "importantInputs": [
+        "src/data/drugs.ts",
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/repository/index.ts",
+        "src/domains/pharmacology/validation/drug.ts",
+        "src/domains/pharmacology/validation/primitives.ts"
+      ],
+      "importantOutputs": [
+        "CurrentCompatibilityDataError",
+        "CurrentCompatibilityDataErrorCode",
+        "createCurrentCompatibilityDrugReadRepository"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/data/drugs.ts",
+        "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/repository/index.ts",
+        "src/domains/pharmacology/validation/drug.ts",
+        "src/domains/pharmacology/validation/primitives.ts"
+      ],
+      "importantConsumers": [],
+      "v1Dependency": "direct",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "transitive",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 2 additive read boundary; no production consumer switch"
     },
     {
       "path": "src/domains/pharmacology/model/drug.ts",
@@ -4463,6 +4514,7 @@
       ],
       "importantConsumers": [
         "src/domains/pharmacology/model/index.ts",
+        "src/domains/pharmacology/repository/read.ts",
         "src/domains/pharmacology/validation/drug.ts"
       ],
       "v1Dependency": "none",
@@ -4570,6 +4622,7 @@
         "src/domains/pharmacology/model/evidence.ts",
         "src/domains/pharmacology/model/index.ts",
         "src/domains/pharmacology/model/target.ts",
+        "src/domains/pharmacology/repository/read.ts",
         "src/domains/pharmacology/validation/primitives.ts"
       ],
       "v1Dependency": "none",
@@ -4708,7 +4761,9 @@
         "src/domains/pharmacology/model/quantity.ts",
         "src/domains/pharmacology/model/target.ts"
       ],
-      "importantConsumers": [],
+      "importantConsumers": [
+        "src/domains/pharmacology/compatibility/current-read-repository.ts"
+      ],
       "v1Dependency": "none",
       "v2Dependency": "none",
       "scientificSourceDataDependency": "none",
@@ -4716,13 +4771,9 @@
       "persistenceApiDependency": "none",
       "aiDependency": "none",
       "visualizationDependency": "none",
-      "testCoverage": "no current import-graph test reach",
-      "knownGaps": [
-        "no current import path from tests; framework/E2E coverage may still exist"
-      ],
-      "knownRisks": [
-        "no import-graph test reach"
-      ],
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
       "proposedFutureDomainModule": "retain in src/domains/pharmacology",
       "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
     },
@@ -4977,6 +5028,94 @@
       "plannedMigrationWave": "Wave 1 additive model/validation; no production read switch"
     },
     {
+      "path": "src/domains/pharmacology/repository/index.ts",
+      "layerDomain": "domain/pharmacology/repository",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define the canonical pharmacology index read contract",
+      "responsibilityDetails": [
+        "Define the canonical pharmacology index read contract"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "CanonicalDrugReadRepository",
+        "CanonicalDrugReadResult"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/repository/read.ts"
+      ],
+      "importantOutputs": [
+        "CanonicalDrugReadRepository",
+        "CanonicalDrugReadResult"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/repository/read.ts"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/compatibility/current-read-repository.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 2 additive read boundary; no production consumer switch"
+    },
+    {
+      "path": "src/domains/pharmacology/repository/read.ts",
+      "layerDomain": "domain/pharmacology/repository",
+      "runtime": "shared/server-default",
+      "primaryResponsibility": "Define the canonical pharmacology read read contract",
+      "responsibilityDetails": [
+        "Define the canonical pharmacology read read contract"
+      ],
+      "secondaryResponsibilities": [],
+      "architecturalMix": [],
+      "importantExports": [
+        "CanonicalDrugReadRepository",
+        "CanonicalDrugReadResult"
+      ],
+      "importantInputs": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/model/ids.ts"
+      ],
+      "importantOutputs": [
+        "CanonicalDrugReadRepository",
+        "CanonicalDrugReadResult"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/domains/pharmacology/model/drug.ts",
+        "src/domains/pharmacology/model/ids.ts"
+      ],
+      "importantConsumers": [
+        "src/domains/pharmacology/repository/index.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "none",
+      "testCoverage": "no current import-graph test reach",
+      "knownGaps": [
+        "no current import path from tests; framework/E2E coverage may still exist"
+      ],
+      "knownRisks": [
+        "no import-graph test reach"
+      ],
+      "proposedFutureDomainModule": "retain in src/domains/pharmacology",
+      "plannedMigrationWave": "Wave 2 additive read boundary; no production consumer switch"
+    },
+    {
       "path": "src/domains/pharmacology/validation/drug.ts",
       "layerDomain": "domain/pharmacology/validation",
       "runtime": "shared/server-default",
@@ -5009,7 +5148,9 @@
         "src/domains/pharmacology/validation/primitives.ts",
         "zod"
       ],
-      "importantConsumers": [],
+      "importantConsumers": [
+        "src/domains/pharmacology/compatibility/current-read-repository.ts"
+      ],
       "v1Dependency": "none",
       "v2Dependency": "none",
       "scientificSourceDataDependency": "none",
@@ -5251,6 +5392,7 @@
         "zod"
       ],
       "importantConsumers": [
+        "src/domains/pharmacology/compatibility/current-read-repository.ts",
         "src/domains/pharmacology/validation/drug.ts",
         "src/domains/pharmacology/validation/epistemics.ts",
         "src/domains/pharmacology/validation/interaction.ts",

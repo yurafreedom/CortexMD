@@ -142,6 +142,8 @@ function runtimeFor(file, directive) {
 function layerFor(file) {
   if (file.startsWith('src/domains/pharmacology/model/')) return 'domain/pharmacology/model';
   if (file.startsWith('src/domains/pharmacology/validation/')) return 'domain/pharmacology/validation';
+  if (file.startsWith('src/domains/pharmacology/repository/')) return 'domain/pharmacology/repository';
+  if (file.startsWith('src/domains/pharmacology/compatibility/')) return 'domain/pharmacology/compatibility';
   if (file === 'src/domains/pharmacology/README.md') return 'domain/pharmacology/documentation';
   if (file.startsWith('src/app/api/')) return 'application/API';
   if (file.startsWith('src/app/')) return 'application/route';
@@ -165,6 +167,8 @@ function primaryResponsibility(file) {
   const base = path.basename(file).replace(/\.(tsx?|jsx?|mts|cts|mjs|cjs|json|css|ico)$/, '');
   if (file.startsWith('src/domains/pharmacology/model/')) return `Define canonical pharmacology ${base} value contracts`;
   if (file.startsWith('src/domains/pharmacology/validation/')) return `Validate canonical pharmacology ${base} values`;
+  if (file.startsWith('src/domains/pharmacology/repository/')) return `Define the canonical pharmacology ${base} read contract`;
+  if (file.startsWith('src/domains/pharmacology/compatibility/')) return 'Project current-compatible V1 records behind the private canonical read adapter';
   if (file === 'src/domains/pharmacology/README.md') return 'Document the canonical pharmacology domain boundary';
   if (file.includes('/app/api/')) return `Handle the ${file.replace(/^src\/app\/api\//, '').replace(/\/route\.ts$/, '')} API boundary`;
   if (file.endsWith('/page.tsx')) return `Render/orchestrate the ${file.replace(/^src\/app\//, '').replace(/\/page\.tsx$/, '') || 'dashboard'} route`;
@@ -204,9 +208,11 @@ function proposedDomain(file) {
 }
 
 function plannedWave(file, v1, v2, pharmacology) {
+  if (file.startsWith('src/domains/pharmacology/repository/')
+    || file.startsWith('src/domains/pharmacology/compatibility/')
+    || file === 'src/domains/pharmacology/README.md') return 'Wave 2 additive read boundary; no production consumer switch';
   if (file.startsWith('src/domains/pharmacology/model/')
-    || file.startsWith('src/domains/pharmacology/validation/')
-    || file === 'src/domains/pharmacology/README.md') return 'Wave 1 additive model/validation; no production read switch';
+    || file.startsWith('src/domains/pharmacology/validation/')) return 'Wave 1 additive model/validation; no production read switch';
   if (file.startsWith('src/scripts/')) return 'Wave 0 diagnostics; destructive migration script disposition in Wave 8';
   if (file === 'src/types/pharmacology.ts' || file === 'src/data/drugs.v2.ts') return 'future reviewed adapter/migration input; not canonicalized in Wave 1';
   if (file === 'src/data/drugs.ts') return 'Wave 8 deletion only after all gates';

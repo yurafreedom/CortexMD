@@ -12,21 +12,21 @@ The groups below cover the high-risk pharmacology cone and all import-graph mult
 
 **PROBLEM:** Facts, unknown/sentinel states, compatibility policy and calculation inputs are structurally co-located. V2 activation can introduce 259 unreviewed bindings and cannot distinguish reviewed, unresolved, missing or placeholder states.
 
-**IMPLEMENTED WAVE 1 FOUNDATION:** `model/ids.ts`, `model/knowledge.ts`, `model/evidence.ts`, `model/quantity.ts`, `model/target.ts`, `model/interaction.ts`, `model/metabolism.ts`, `model/drug.ts`, `model/index.ts`, plus responsibility-aligned `validation/*`. No current V2 record is canonicalized. Curated-data loaders, legacy adapters, and repositories require later authorization.
+**IMPLEMENTED WAVES 1–2:** Wave 1 provides `model/*` and responsibility-aligned `validation/*`. Wave 2 adds the type-only `repository/read.ts` port, its public `repository/index.ts`, and private `compatibility/current-read-repository.ts`. The adapter projects V1 identities and Ki rows only; no current V2 record is canonicalized.
 
 **DEPENDENCY DIRECTION:** value model → validation; curated/raw input → validation → normalized model → calculations. Compatibility adapters depend on the model, never the reverse.
 
-**PUBLIC INTERFACE:** branded IDs, unit-tagged quantities, explicit evidence/knowledge states, and validated immutable drug/target-interaction inputs.
+**PUBLIC INTERFACE:** branded IDs, unit-tagged quantities, explicit evidence/knowledge states, immutable canonical drugs, and a read-only repository with stable listing plus exact-ID `FOUND` / `NOT_FOUND` / `INVALID_ID` lookup.
 
-**FUTURE PRIVATE IMPLEMENTATION:** raw V1/V2 shape parsing, reviewed alias tables, and generated-file details; none exists in Wave 1.
+**PRIVATE IMPLEMENTATION:** the Wave 2 compatibility adapter alone imports raw V1. It validates and freezes a bounded projection. It does not import V2, resolve aliases, expose legacy shapes, or convert CYP policy into scientific relationships. Reviewed alias tables and curated loaders remain future work.
 
-**TEST BOUNDARY:** schema acceptance/rejection, identity/alias rules, units, missing/zero states, evidence state and fixture parity without production reads.
+**TEST BOUNDARY:** schema acceptance/rejection plus independent V1/V2 fixture parity for identity, ordering, names, targets, units, epistemic/evidence state, zero-Ki quarantine, CYP/metabolism quarantine, exact lookup, immutability, and import reachability.
 
-**MIGRATION WAVE:** Wave 1 model/validation only; data adapters/repositories require later authorization.
+**MIGRATION WAVE:** Wave 2 repository implemented but unread by production. A Wave 3 consumer requires separate human acceptance and authorization.
 
 **RISK:** accidental canonical precedence or newly active V2 facts.
 
-**ROLLBACK:** remove additive unread domain files/tests; current imports remain untouched.
+**ROLLBACK:** remove the additive Wave 2 port, adapter, tests, and documentation; current production imports remain independently functional and untouched.
 
 ## 2. Scientific calculations versus heuristic policy
 
@@ -244,9 +244,9 @@ The groups below cover the high-risk pharmacology cone and all import-graph mult
 
 **ROLLBACK:** retain the current combined parser.
 
-## Wave 1 foundational files — current reviewable working tree
+## Wave 1 accepted foundation and Wave 2 reviewable working tree
 
-The narrow additive Wave 1 surface is:
+The accepted Wave 1 foundation is:
 
 ```text
 src/domains/pharmacology/model/ids.ts
@@ -267,4 +267,13 @@ src/domains/pharmacology/validation/drug.ts
 src/domains/pharmacology/README.md
 ```
 
-No repository, adapter, canonical current dataset, data migration, calculation switch, or production read is included. The 116 V2 records and 349 bindings remain legacy characterization, and the 259 V2-only rows remain unreviewed and inactive.
+Wave 2 adds only:
+
+```text
+src/domains/pharmacology/repository/read.ts
+src/domains/pharmacology/repository/index.ts
+src/domains/pharmacology/compatibility/current-read-repository.ts
+tests/unit/domains/pharmacology/repository.test.ts
+```
+
+The private adapter represents all 116 current V1 records and 90 V1 Ki rows. No canonical current dataset, V2 importer, calculation switch, or production read is included. The 116 V2 records and 349 bindings remain legacy characterization; the 259 binding-count delta and all V2 zero-Ki rows remain unreviewed and inactive in the repository.
