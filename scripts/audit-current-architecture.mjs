@@ -133,6 +133,7 @@ function analyzeSource(absolute) {
 function runtimeFor(file, directive) {
   if (!parseableExtensions.has(path.extname(file))) return file.endsWith('.css') ? 'client-style' : 'asset/data';
   if (file.startsWith('src/scripts/')) return 'build-time diagnostic';
+  if (file.startsWith('src/visualization/brain/')) return 'client';
   if (directive === 'use client') return 'client';
   if (directive === 'use server' || file.includes('/app/api/') || file === 'src/proxy.ts'
     || file.endsWith('/supabase-server.ts') || file.endsWith('/admin-session.ts') || file === 'src/i18n/request.ts') return 'server';
@@ -140,6 +141,7 @@ function runtimeFor(file, directive) {
 }
 
 function layerFor(file) {
+  if (file.startsWith('src/visualization/brain/core/')) return 'visualization/brain/core';
   if (file.startsWith('src/domains/pharmacology/model/')) return 'domain/pharmacology/model';
   if (file.startsWith('src/domains/pharmacology/validation/')) return 'domain/pharmacology/validation';
   if (file.startsWith('src/domains/pharmacology/repository/')) return 'domain/pharmacology/repository';
@@ -165,6 +167,7 @@ function layerFor(file) {
 
 function primaryResponsibility(file) {
   const base = path.basename(file).replace(/\.(tsx?|jsx?|mts|cts|mjs|cjs|json|css|ico)$/, '');
+  if (file.startsWith('src/visualization/brain/core/')) return `Own the current brain ${base} runtime seam`;
   if (file.startsWith('src/domains/pharmacology/model/')) return `Define canonical pharmacology ${base} value contracts`;
   if (file.startsWith('src/domains/pharmacology/validation/')) return `Validate canonical pharmacology ${base} values`;
   if (file.startsWith('src/domains/pharmacology/repository/')) return `Define the canonical pharmacology ${base} read contract`;
@@ -192,6 +195,7 @@ function primaryResponsibility(file) {
 }
 
 function proposedDomain(file) {
+  if (file.startsWith('src/visualization/brain/')) return 'retain in src/visualization/brain';
   if (file.startsWith('src/domains/pharmacology/')) return 'retain in src/domains/pharmacology';
   if (file === 'src/data/drugs.ts') return 'src/domains/pharmacology/adapters/legacy-v1-data (temporary)';
   if (file === 'src/data/drugs.v2.ts') return 'src/domains/pharmacology/data/canonical-input (after review)';
@@ -208,6 +212,8 @@ function proposedDomain(file) {
 }
 
 function plannedWave(file, v1, v2, pharmacology) {
+  if (file.startsWith('src/visualization/brain/core/')) return 'NV-0 current-behavior seam; replacement deferred to later NV waves';
+  if (file === 'src/components/Brain3D/BrainCanvas.tsx') return 'NV-0 React integration boundary; loading, asset and semantic changes deferred';
   if (file.startsWith('src/domains/pharmacology/repository/')
     || file.startsWith('src/domains/pharmacology/compatibility/')
     || file === 'src/domains/pharmacology/README.md') return 'Wave 2 additive read boundary; no production consumer switch';
@@ -328,7 +334,7 @@ const scientificDataFiles = new Set([
 ]);
 const persistenceMarkers = [/localStorage|supabase|\/app\/api\/|useScheme|activeScheme|cortexmd_(?:scheme|preset)|user_presets|user_treatment_history|scheme_history|\bdose_mg\b/i];
 const aiMarkers = [/\/api\/chat\/|\/Chat\/|aiClient|Anthropic/i];
-const visualizationMarkers = [/\/Brain3D\/|Cascade|RegionalDensity|ZonePopup|\bthree\b|brainRegions/i];
+const visualizationMarkers = [/\/Brain3D\/|\/visualization\/brain\/|Cascade|RegionalDensity|ZonePopup|\bthree\b|brainRegions/i];
 
 function dependencyState(file, predicate) {
   if (predicate(file)) return 'direct/self';

@@ -2,7 +2,7 @@
 
 > **CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE OR SCIENTIFIC VALIDATION**
 
-The historical characterization baseline is `6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b`. The current working-tree snapshot was generated on accepted Wave 1 commit `657e5692c1e80e428dbf3bcf4b8e745ac0db226f` and includes uncommitted Wave 2 files; it does not claim that those files are contained in that commit. This atlas describes behavior and dependency reachability, not scientific or clinical validity.
+The historical characterization baseline is `6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b`. The current working-tree snapshot was generated on accepted Wave 2 commit `d3e5451c73b46849d203055ff0b7455e587e09a5` and includes the uncommitted NV-0 BrainCanvas seams; it does not claim that those files are contained in that commit. This atlas describes behavior and dependency reachability, not scientific or clinical validity.
 
 ## Scope and reproducibility
 
@@ -28,23 +28,25 @@ Next.js routes and client page
 
 Current production data, calculation, projection, persistence, AI serialization, and UI imports still form a shared dependency cone. Accepted Wave 1 adds the model/validation boundary. Wave 2 adds an unread public repository port and one private V1 compatibility adapter, but no canonical current dataset or production read path.
 
+NV-0 moves current Three.js mechanics from `BrainCanvas.tsx` into five instance-local runtime seams under `src/visualization/brain/core/`. Loading remains eager, the continuous frame loop remains active, the legacy region/tract input remains illustrative, and Three.js remains in the initial client graph.
+
 ## Graph baseline
 
 | Measure | Current value |
 |---|---:|
-| Files catalogued under `src/` | 144 |
-| Runtime production modules | 141 |
+| Files catalogued under `src/` | 149 |
+| Runtime production modules | 146 |
 | Build-time/migration modules under `src/scripts/` | 3 |
-| Internal import edges | 281 |
+| Internal import edges | 286 |
 | Direct V1 / V2 / dual production consumers | 14 / 6 / 2 |
 | Transitive V1 / V2 / dual production consumers | 19 / 11 / 7 |
-| Pharmacology/scientific dependency modules | 44 |
+| Pharmacology/scientific dependency modules | 46 |
 | Runtime circular dependencies | 0 |
 | Unresolved internal imports | 0 |
 | Server/client reachability review rows | 3 |
 | Barrel modules | 4 |
-| Heavy-package or full-data client reachability rows | 25 |
-| Deep cross-area alias/parent imports | 186 |
+| Heavy-package or full-data client reachability rows | 29 |
+| Deep cross-area alias/parent imports | 187 |
 | Top-level construction/expression review rows | 14 |
 | Static multi-responsibility candidates | 27 |
 
@@ -55,7 +57,7 @@ The V1/V2 counts match the accepted discovery evidence. Type-only edges are cata
 - `src/app/admin/(auth)/AdminDashboard.tsx` imports a Next.js server action and therefore reaches `actions.ts`, `admin-session.ts`, and `supabase-server.ts`. The direct server-action import is an expected framework pattern; the three rows are retained as a boundary-review baseline, not declared violations.
 - Runtime cycles: none. The apparent `AdminDashboard.tsx` ↔ `page.tsx` loop is type-only in one direction and is not a runtime cycle.
 - The existing UI barrels are `src/components/Brain3D/index.ts` and `src/components/IndicatorPopup/index.ts`; both have one consumer (`src/app/page.tsx`). Wave 1 adds the type-focused `src/domains/pharmacology/model/index.ts` surface. Wave 2 adds the type-only `src/domains/pharmacology/repository/index.ts` port. Only the private compatibility adapter consumes the two domain barrels; no outside production module does.
-- `src/app/page.tsx` reaches Three.js, Supabase, V1, and V2. `BrainCanvas.tsx` reaches Three.js. Twenty-three additional client modules reach a full V1 or V2 dataset and/or Supabase. This is a client bundle/reachability risk; import count by itself is not treated as a performance defect.
+- `src/app/page.tsx` reaches Three.js, Supabase, V1, and V2. `BrainCanvas.tsx` and four extracted visualization-core modules reach Three.js; these are decomposed rows for the same eager client dependency, not additional shipped copies. Twenty-three other client modules reach a full V1 or V2 dataset and/or Supabase. This is a client bundle/reachability risk; import count by itself is not treated as a performance defect.
 - Top-level calls are reported for review. Several are deterministic initialization (`next/font` and schema construction), not necessarily side effects. The three `src/scripts/*` rows are build-time only. Wave 2 makes no runtime optimization or dynamic-import change.
 
 ## Deep pharmacology dependency cone
@@ -89,8 +91,10 @@ The accepted Wave 1 model/validators and Wave 2 public port remain outside all U
 | `src/app/profile/page.tsx` | Profile route composition that reaches V2 through dashboard/history UI. |
 | `src/app/profile/ProfileDashboard.tsx` | Profile UI orchestration and V2 drug-data reachability. |
 | `src/app/profile/TreatmentHistoryForm.tsx` | Treatment UI, V2 labels/unit display, and API serialization through legacy `dose_mg`. Persistence + view logic. |
-| `src/components/Brain3D/BrainCanvas.tsx` | Three.js lifecycle, model loading, region interaction and hard-coded pharmacology-ID visual activation. Heavy rendering + domain projection. |
+| `src/components/Brain3D/BrainCanvas.tsx` | React lifecycle and current application-state connection for the extracted instance-local Three.js runtime. |
 | `src/components/Brain3D/index.ts` | Re-export boundary exposing `BrainCanvas`. |
+| `src/visualization/brain/core/current-illustrative-overlays.ts` | Current legacy XYZ marker/tract rendering and hard-coded pharmacology-ID visual activation; explicitly not atlas semantics. |
+| `src/visualization/brain/core/renderer-lifecycle.ts` | Current eager renderer/runtime orchestration reaching the illustrative overlay input through its owned seam. |
 | `src/components/BrainDeficits/DeficitsModal.tsx` | Deficit UI with V1 drug lookup/labels. |
 | `src/components/Deficits/DeficitCard.tsx` | Deficit presentation and V1 ID-to-drug projection. |
 | `src/components/Deficits/DeficitList.tsx` | Deficit list orchestration and V1-dependent child graph. |

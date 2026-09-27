@@ -150,9 +150,9 @@ The groups below cover the high-risk pharmacology cone and all import-graph mult
 
 ## 7. Brain and cascade visualization
 
-**CURRENT FILES:** `src/components/Brain3D/BrainCanvas.tsx`, `CanvasControls.tsx`, `index.ts`, `src/components/GlutamateCascade/GlutamateCascadeOverlay.tsx`, `src/components/Sigma1/CascadeOverlay.tsx`, `src/data/brainRegions.ts`
+**CURRENT FILES:** `src/components/Brain3D/BrainCanvas.tsx`, `CanvasControls.tsx`, `index.ts`, `src/visualization/brain/core/*.ts`, `src/components/GlutamateCascade/GlutamateCascadeOverlay.tsx`, `src/components/Sigma1/CascadeOverlay.tsx`, `src/data/brainRegions.ts`
 
-**CURRENT RESPONSIBILITIES:** Three.js lifecycle/model loading, camera/control UI, hard-coded drug activation, region metadata, sigma/glutamate calculations and overlay presentation.
+**CURRENT RESPONSIBILITIES:** NV-0 separates the current Three.js renderer lifecycle, model loading, continuous RAF, picking and illustrative overlays behind `BrainCanvas`; camera/control UI, hard-coded drug activation, region metadata, sigma/glutamate calculations and overlay presentation remain current behavior.
 
 **PROBLEM:** heavy optional rendering, domain ID rules and scientific projections meet in client components/barrels.
 
@@ -166,11 +166,11 @@ The groups below cover the high-risk pharmacology cone and all import-graph mult
 
 **TEST BOUNDARY:** semantic projection tests, renderer smoke tests, visual/E2E interactions and measured bundle gate.
 
-**MIGRATION WAVE:** after core pharmacology migration; loading optimization only with separate authorization.
+**MIGRATION WAVE:** NV-0 extracts current-behavior seams only; NV-1 loading/scheduling, NV-2 assets/disposal, and NV-3 semantics each require separate authorization.
 
 **RISK:** bundle growth, visual/domain divergence, resource leaks and asset regressions.
 
-**ROLLBACK:** use the current eager component and unchanged asset.
+**ROLLBACK:** inline the extracted current runtime seams behind the unchanged `BrainCanvasProps` and barrel; keep the eager component and unchanged asset.
 
 ## 8. Deficit and rule projections
 

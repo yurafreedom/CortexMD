@@ -1,0 +1,234 @@
+{
+  "schemaVersion": "1.0.0",
+  "warning": "CURRENT NV-0 PRODUCT CHARACTERIZATION — NOT A TARGET RENDERER, SCIENTIFIC VALIDATION, OR ATLAS MAPPING",
+  "startState": {
+    "branch": "main",
+    "head": "d3e5451c73b46849d203055ff0b7455e587e09a5",
+    "originMain": "d3e5451c73b46849d203055ff0b7455e587e09a5",
+    "acceptedTag": "phase-1-wave2-accepted",
+    "acceptedTagTarget": "d3e5451c73b46849d203055ff0b7455e587e09a5",
+    "workingTreeBefore": "clean"
+  },
+  "brainCanvas": {
+    "locBefore": 690,
+    "locAfter": 91,
+    "directImportsBefore": [
+      "react",
+      "three",
+      "three/examples/jsm/controls/OrbitControls.js",
+      "three/examples/jsm/loaders/GLTFLoader.js",
+      "@/data/brainRegions"
+    ],
+    "directImportsAfter": [
+      "react",
+      "@/visualization/brain/core/renderer-lifecycle"
+    ],
+    "reactBefore": {
+      "stateHooks": 0,
+      "refs": 14,
+      "effects": 3,
+      "callbacks": 2
+    },
+    "reactAfter": {
+      "stateHooks": 0,
+      "refs": 3,
+      "effects": 3,
+      "callbacks": 0
+    },
+    "responsibilityCountBefore": 14,
+    "responsibilityCountAfter": 5,
+    "responsibilitiesAfter": [
+      "public prop contract",
+      "latest React prop synchronization",
+      "runtime mount and unmount orchestration",
+      "panel-transition resize notification",
+      "current overlay-state forwarding"
+    ],
+    "publicProps": [
+      { "name": "activeDrugs", "required": true, "type": "Record<string, number>" },
+      { "name": "selectedRegion", "required": true, "type": "string | null" },
+      { "name": "selectedDeficit", "required": true, "type": "string | null" },
+      { "name": "conflictZones", "required": false, "type": "string[]", "default": [] },
+      { "name": "onRegionClick", "required": true, "type": "(id: string | null, screenPos?: { x: number; y: number }) => void" },
+      { "name": "onRegionHover", "required": true, "type": "(id: string | null, event?: MouseEvent) => void" },
+      { "name": "opacity", "required": false, "type": "number", "default": 0.15 },
+      { "name": "rightPanelOpen", "required": false, "type": "boolean", "default": false },
+      { "name": "leftPanelWidth", "required": false, "type": "number", "default": 280 },
+      { "name": "rightPanelWidth", "required": false, "type": "number", "default": 340 }
+    ],
+    "publicPropsSha256": "b2835ca2b83f5ec089d85490f0f6b4838192a1a5090629d7a9f5b3e86b968c45",
+    "publicBarrelChanged": false,
+    "visibleBehaviorIntentionallyChanged": false
+  },
+  "moduleSeams": [
+    {
+      "id": "renderer-lifecycle",
+      "path": "src/visualization/brain/core/renderer-lifecycle.ts",
+      "responsibility": "instance-local renderer, camera, controls, lights, viewport and current-runtime orchestration"
+    },
+    {
+      "id": "current-asset-adapter",
+      "path": "src/visualization/brain/core/current-asset-adapter.ts",
+      "responsibility": "unchanged eager GLTF load, imported-model treatment, wireframe, particles and procedural fallback"
+    },
+    {
+      "id": "current-illustrative-overlays",
+      "path": "src/visualization/brain/core/current-illustrative-overlays.ts",
+      "responsibility": "legacy/illustrative markers, hitboxes, rings, tracts and current visual activation"
+    },
+    {
+      "id": "current-picking",
+      "path": "src/visualization/brain/core/current-picking.ts",
+      "responsibility": "marker-only raycast and click/hover listener ownership"
+    },
+    {
+      "id": "render-scheduler",
+      "path": "src/visualization/brain/core/render-scheduler.ts",
+      "responsibility": "current continuous RAF ownership; not a demand scheduler"
+    }
+  ],
+  "asset": {
+    "path": "/brain.glb",
+    "repositoryPath": "public/brain.glb",
+    "rawBytes": 43191068,
+    "sha256": "8f0babae064319fd8d9520148ca5d31ce70938b2edd4db2dced960e4caffe8cf",
+    "changed": false,
+    "requestPoint": "BrainCanvas mount via current runtime creation",
+    "loadingMode": "eager"
+  },
+  "camera": {
+    "fov": 45,
+    "initialAspect": 1,
+    "near": 0.1,
+    "far": 100,
+    "position": [3.5, 0.2, 0],
+    "lookAt": [-0.2, -0.1, 0]
+  },
+  "controls": {
+    "kind": "OrbitControls",
+    "enableDamping": true,
+    "dampingFactor": 0.05,
+    "minDistance": 1.5,
+    "maxDistance": 8,
+    "target": [-0.2, -0.1, 0]
+  },
+  "frameLifecycle": {
+    "owner": "render-scheduler",
+    "mode": "continuous",
+    "starts": "once during current runtime creation",
+    "firstFrame": "immediate while next frame is already requested",
+    "perFrame": [
+      "clock elapsed time",
+      "OrbitControls update",
+      "marker/ring/tract visual updates",
+      "particle rotation and shimmer when loaded",
+      "brain opacity propagation",
+      "renderer render"
+    ],
+    "cancelledBy": "current runtime disposal",
+    "demandSchedulerIntroduced": false,
+    "visibilityPauseIntroduced": false,
+    "reducedMotionPolicyIntroduced": false
+  },
+  "resize": {
+    "windowListenerOwner": "renderer-lifecycle",
+    "listenerCountPerRuntime": 1,
+    "initialResize": true,
+    "panelTransitionOwner": "BrainCanvas",
+    "panelTransitionDelayMs": 350
+  },
+  "interaction": {
+    "owner": "current-picking",
+    "pickTargets": "legacy marker group including hitboxes and rings",
+    "picksGlbSurface": false,
+    "selection": "click selects; click selected marker or empty space clears",
+    "hover": "body cursor and onRegionHover callback",
+    "screenPosition": "projected hit-object world position in canvas rectangle"
+  },
+  "currentOverlayClassifications": {
+    "regionCoordinates": "LEGACY_ILLUSTRATIVE_PRODUCT_COORDINATES",
+    "regionCount": 15,
+    "tracts": "ILLUSTRATIVE_PRODUCT_PATHS",
+    "tractCount": 11,
+    "particles": "ILLUSTRATIVE_RANDOM_SURFACE_EFFECT",
+    "atlasBacked": false,
+    "measuredActivity": false,
+    "structuralConnectivity": false,
+    "functionalConnectivity": false,
+    "simulationOutput": false
+  },
+  "resourceOwnership": {
+    "renderer": { "owner": "renderer-lifecycle", "disposed": true },
+    "canvas": { "owner": "renderer-lifecycle", "removed": true },
+    "scene": { "owner": "renderer-lifecycle", "resourceTraversalOnDispose": false },
+    "camera": { "owner": "renderer-lifecycle", "disposable": false },
+    "controls": { "owner": "renderer-lifecycle", "disposed": true },
+    "loadedGltfScene": { "owner": "current-asset-adapter", "disposed": false },
+    "geometry": { "owner": "current-asset-adapter/current-illustrative-overlays", "disposed": false },
+    "materials": { "owner": "current-asset-adapter/current-illustrative-overlays", "disposed": false },
+    "textures": { "owner": "GLTFLoader import lifecycle", "disposed": false },
+    "wireframe": { "owner": "current-asset-adapter", "disposed": false },
+    "particles": { "owner": "current-asset-adapter", "disposed": false },
+    "tracts": { "owner": "current-illustrative-overlays", "disposed": false },
+    "markers": { "owner": "current-illustrative-overlays", "disposed": false },
+    "listeners": { "owner": "renderer-lifecycle/current-picking", "removed": true },
+    "raf": { "owner": "render-scheduler", "cancelled": true }
+  },
+  "initialReachability": {
+    "threeBefore": true,
+    "threeAfter": true,
+    "changed": false,
+    "dynamicImportIntroduced": false,
+    "suspenseIntroduced": false,
+    "intentLoadingIntroduced": false
+  },
+  "bundle": {
+    "acceptedInitialAssetsGzipBytes": 498316,
+    "currentInitialAssetsGzipBytes": 498784,
+    "deltaBytes": 468,
+    "deltaPercent": 0.09391631013252635,
+    "regressionAllowanceGzipBytes": 5120,
+    "withinBudget": true,
+    "twoCleanBuildsIdentical": true,
+    "threeInInitialGraph": true,
+    "threeAssetCount": 1
+  },
+  "architecture": {
+    "before": {
+      "sourceFiles": 144,
+      "productionModules": 141,
+      "internalEdges": 281,
+      "cycles": 0,
+      "unresolvedInternalImports": 0
+    },
+    "after": {
+      "sourceFiles": 149,
+      "productionModules": 146,
+      "internalEdges": 286,
+      "cycles": 0,
+      "unresolvedInternalImports": 0
+    }
+  },
+  "knownUnresolvedDebt": [
+    "Three.js and the GLB remain eagerly reachable and loaded",
+    "the frame loop remains continuous with no hidden-tab or reduced-motion policy",
+    "loaded geometry, materials, textures, wireframes, particles, markers and tracts are not explicitly disposed",
+    "in-flight GLTF loading is not aborted on unmount",
+    "WebGL renderer construction failure has no local fallback",
+    "particle-source geometry is assumed to have a position attribute",
+    "region coordinates and paths remain legacy/illustrative rather than atlas-backed",
+    "tract activation remains hard-coded to current drug identifiers",
+    "particles use nondeterministic random outward offsets",
+    "the 3D view has no accessible tabular parity"
+  ],
+  "excluded": [
+    "NV-1",
+    "NV-2",
+    "NV-3",
+    "NV-4",
+    "NV-5",
+    "SIM-0",
+    "TVB",
+    "PHARM-P1-W3"
+  ]
+}

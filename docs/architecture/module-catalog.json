@@ -1,12 +1,12 @@
 {
   "warning": "CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE OR SCIENTIFIC VALIDATION",
   "characterizationBaselineCommit": "6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b",
-  "workingTreeBaseCommit": "657e5692c1e80e428dbf3bcf4b8e745ac0db226f",
+  "workingTreeBaseCommit": "d3e5451c73b46849d203055ff0b7455e587e09a5",
   "summary": {
-    "sourceFilesCatalogued": 144,
-    "productionModulesCatalogued": 141,
+    "sourceFilesCatalogued": 149,
+    "productionModulesCatalogued": 146,
     "buildTimeDiagnosticModules": 3,
-    "internalEdges": 281,
+    "internalEdges": 286,
     "externalImportSpecifiers": [
       "@anthropic-ai/sdk",
       "@supabase/ssr",
@@ -37,13 +37,13 @@
     "transitiveV1ProductionConsumers": 19,
     "transitiveV2ProductionConsumers": 11,
     "transitiveDualProductionConsumers": 7,
-    "pharmacologyDependencyModules": 44,
+    "pharmacologyDependencyModules": 46,
     "circularDependencyCount": 0,
     "unresolvedInternalImportCount": 0,
     "serverClientBoundaryRiskCount": 3,
     "barrelModuleCount": 4,
-    "heavyClientDependencyRiskCount": 25,
-    "deepCrossDomainImportCount": 186,
+    "heavyClientDependencyRiskCount": 29,
+    "deepCrossDomainImportCount": 187,
     "topLevelSideEffectModuleCount": 14,
     "multiResponsibilityModuleCount": 27
   },
@@ -1909,24 +1909,21 @@
       "responsibilityDetails": [
         "Render and coordinate the BrainCanvas UI",
         "transitive scientific-data dependency",
-        "derived/heuristic current behavior",
         "direct/self visualization behavior"
       ],
       "secondaryResponsibilities": [
-        "derived or heuristic behavior",
         "visualization behavior"
       ],
       "architecturalMix": [
         "CALCULATION + UI",
-        "DOMAIN + REACT",
-        "SCIENTIFIC FACT + HEURISTIC"
+        "DOMAIN + REACT"
       ],
       "importantExports": [
         "BrainCanvas",
         "BrainCanvasProps"
       ],
       "importantInputs": [
-        "src/data/brainRegions.ts"
+        "src/visualization/brain/core/renderer-lifecycle.ts"
       ],
       "importantOutputs": [
         "BrainCanvas",
@@ -1934,11 +1931,8 @@
       ],
       "sideEffects": [],
       "directDependencies": [
-        "src/data/brainRegions.ts",
-        "react",
-        "three",
-        "three/examples/jsm/controls/OrbitControls.js",
-        "three/examples/jsm/loaders/GLTFLoader.js"
+        "src/visualization/brain/core/renderer-lifecycle.ts",
+        "react"
       ],
       "importantConsumers": [
         "src/components/Brain3D/index.ts"
@@ -1946,20 +1940,15 @@
       "v1Dependency": "none",
       "v2Dependency": "none",
       "scientificSourceDataDependency": "transitive",
-      "derivedHeuristicBehavior": "yes — current behavior only; review module details",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
       "persistenceApiDependency": "none",
       "aiDependency": "none",
       "visualizationDependency": "direct/self",
-      "testCoverage": "no current import-graph test reach",
-      "knownGaps": [
-        "no current import path from tests; framework/E2E coverage may still exist"
-      ],
-      "knownRisks": [
-        "no import-graph test reach",
-        "scientific data and derived/heuristic behavior share dependency cone"
-      ],
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
       "proposedFutureDomainModule": "src/presentation/Brain3D",
-      "plannedMigrationWave": "Wave 3 narrow projections or later risk-selected wave"
+      "plannedMigrationWave": "NV-0 React integration boundary; loading, asset and semantic changes deferred"
     },
     {
       "path": "src/components/Brain3D/CanvasControls.tsx",
@@ -3895,11 +3884,11 @@
       "sideEffects": [],
       "directDependencies": [],
       "importantConsumers": [
-        "src/components/Brain3D/BrainCanvas.tsx",
         "src/components/Deficits/DeficitCard.tsx",
         "src/components/Panels/RightPanel.tsx",
         "src/components/Panels/ZonePopup.tsx",
-        "src/lib/pharmacology.ts"
+        "src/lib/pharmacology.ts",
+        "src/visualization/brain/core/current-illustrative-overlays.ts"
       ],
       "v1Dependency": "none",
       "v2Dependency": "none",
@@ -7549,6 +7538,256 @@
       "knownRisks": [],
       "proposedFutureDomainModule": "src/domains/pharmacology/model",
       "plannedMigrationWave": "future reviewed adapter/migration input; not canonicalized in Wave 1"
+    },
+    {
+      "path": "src/visualization/brain/core/current-asset-adapter.ts",
+      "layerDomain": "visualization/brain/core",
+      "runtime": "client",
+      "primaryResponsibility": "Own the current brain current-asset-adapter runtime seam",
+      "responsibilityDetails": [
+        "Own the current brain current-asset-adapter runtime seam",
+        "derived/heuristic current behavior",
+        "direct/self visualization behavior"
+      ],
+      "secondaryResponsibilities": [
+        "derived or heuristic behavior",
+        "visualization behavior"
+      ],
+      "architecturalMix": [],
+      "importantExports": [
+        "CURRENT_BRAIN_ASSET_PATH",
+        "CurrentBrainAssetLoader",
+        "CurrentBrainAssetRuntime",
+        "loadCurrentBrainAsset"
+      ],
+      "importantInputs": [],
+      "importantOutputs": [
+        "CURRENT_BRAIN_ASSET_PATH",
+        "CurrentBrainAssetLoader",
+        "CurrentBrainAssetRuntime",
+        "loadCurrentBrainAsset"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "three",
+        "three/examples/jsm/loaders/GLTFLoader.js"
+      ],
+      "importantConsumers": [
+        "src/visualization/brain/core/renderer-lifecycle.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "yes — current behavior only; review module details",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "direct/self",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/visualization/brain",
+      "plannedMigrationWave": "NV-0 current-behavior seam; replacement deferred to later NV waves"
+    },
+    {
+      "path": "src/visualization/brain/core/current-illustrative-overlays.ts",
+      "layerDomain": "visualization/brain/core",
+      "runtime": "client",
+      "primaryResponsibility": "Own the current brain current-illustrative-overlays runtime seam",
+      "responsibilityDetails": [
+        "Own the current brain current-illustrative-overlays runtime seam",
+        "transitive scientific-data dependency",
+        "direct/self visualization behavior"
+      ],
+      "secondaryResponsibilities": [
+        "visualization behavior"
+      ],
+      "architecturalMix": [],
+      "importantExports": [
+        "CurrentIllustrativeOverlayState",
+        "CurrentIllustrativeOverlays",
+        "createCurrentIllustrativeOverlays"
+      ],
+      "importantInputs": [
+        "src/data/brainRegions.ts"
+      ],
+      "importantOutputs": [
+        "CurrentIllustrativeOverlayState",
+        "CurrentIllustrativeOverlays",
+        "createCurrentIllustrativeOverlays"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/data/brainRegions.ts",
+        "three"
+      ],
+      "importantConsumers": [
+        "src/visualization/brain/core/renderer-lifecycle.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "transitive",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "direct/self",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/visualization/brain",
+      "plannedMigrationWave": "NV-0 current-behavior seam; replacement deferred to later NV waves"
+    },
+    {
+      "path": "src/visualization/brain/core/current-picking.ts",
+      "layerDomain": "visualization/brain/core",
+      "runtime": "client",
+      "primaryResponsibility": "Own the current brain current-picking runtime seam",
+      "responsibilityDetails": [
+        "Own the current brain current-picking runtime seam",
+        "direct/self visualization behavior"
+      ],
+      "secondaryResponsibilities": [
+        "visualization behavior"
+      ],
+      "architecturalMix": [],
+      "importantExports": [
+        "CurrentPickingCallbacks",
+        "CurrentPickingRuntime",
+        "createCurrentPickingRuntime"
+      ],
+      "importantInputs": [],
+      "importantOutputs": [
+        "CurrentPickingCallbacks",
+        "CurrentPickingRuntime",
+        "createCurrentPickingRuntime"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "three"
+      ],
+      "importantConsumers": [
+        "src/visualization/brain/core/renderer-lifecycle.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "direct/self",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/visualization/brain",
+      "plannedMigrationWave": "NV-0 current-behavior seam; replacement deferred to later NV waves"
+    },
+    {
+      "path": "src/visualization/brain/core/render-scheduler.ts",
+      "layerDomain": "visualization/brain/core",
+      "runtime": "client",
+      "primaryResponsibility": "Own the current brain render-scheduler runtime seam",
+      "responsibilityDetails": [
+        "Own the current brain render-scheduler runtime seam",
+        "direct/self visualization behavior"
+      ],
+      "secondaryResponsibilities": [
+        "visualization behavior"
+      ],
+      "architecturalMix": [],
+      "importantExports": [
+        "ContinuousFrameLoop",
+        "FrameSchedulingApi",
+        "createContinuousFrameLoop"
+      ],
+      "importantInputs": [],
+      "importantOutputs": [
+        "ContinuousFrameLoop",
+        "FrameSchedulingApi",
+        "createContinuousFrameLoop"
+      ],
+      "sideEffects": [],
+      "directDependencies": [],
+      "importantConsumers": [
+        "src/visualization/brain/core/renderer-lifecycle.ts"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "none",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "direct/self",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/visualization/brain",
+      "plannedMigrationWave": "NV-0 current-behavior seam; replacement deferred to later NV waves"
+    },
+    {
+      "path": "src/visualization/brain/core/renderer-lifecycle.ts",
+      "layerDomain": "visualization/brain/core",
+      "runtime": "client",
+      "primaryResponsibility": "Own the current brain renderer-lifecycle runtime seam",
+      "responsibilityDetails": [
+        "Own the current brain renderer-lifecycle runtime seam",
+        "transitive scientific-data dependency",
+        "direct/self visualization behavior"
+      ],
+      "secondaryResponsibilities": [
+        "visualization behavior"
+      ],
+      "architecturalMix": [],
+      "importantExports": [
+        "CURRENT_CAMERA_CONFIG",
+        "CURRENT_CONTROLS_CONFIG",
+        "CURRENT_LIGHT_CONFIG",
+        "CurrentBrainRuntime",
+        "CurrentBrainRuntimeState",
+        "RendererSceneRuntime",
+        "attachCurrentViewportResize",
+        "createCurrentBrainRuntime",
+        "createRendererScene"
+      ],
+      "importantInputs": [
+        "src/visualization/brain/core/current-asset-adapter.ts",
+        "src/visualization/brain/core/current-illustrative-overlays.ts",
+        "src/visualization/brain/core/current-picking.ts",
+        "src/visualization/brain/core/render-scheduler.ts"
+      ],
+      "importantOutputs": [
+        "CURRENT_CAMERA_CONFIG",
+        "CURRENT_CONTROLS_CONFIG",
+        "CURRENT_LIGHT_CONFIG",
+        "CurrentBrainRuntime",
+        "CurrentBrainRuntimeState",
+        "RendererSceneRuntime",
+        "attachCurrentViewportResize",
+        "createCurrentBrainRuntime",
+        "createRendererScene"
+      ],
+      "sideEffects": [],
+      "directDependencies": [
+        "src/visualization/brain/core/current-asset-adapter.ts",
+        "src/visualization/brain/core/current-illustrative-overlays.ts",
+        "src/visualization/brain/core/current-picking.ts",
+        "src/visualization/brain/core/render-scheduler.ts",
+        "three",
+        "three/examples/jsm/controls/OrbitControls.js"
+      ],
+      "importantConsumers": [
+        "src/components/Brain3D/BrainCanvas.tsx"
+      ],
+      "v1Dependency": "none",
+      "v2Dependency": "none",
+      "scientificSourceDataDependency": "transitive",
+      "derivedHeuristicBehavior": "none detected by source heuristic",
+      "persistenceApiDependency": "none",
+      "aiDependency": "none",
+      "visualizationDependency": "direct/self",
+      "testCoverage": "direct test import",
+      "knownGaps": [],
+      "knownRisks": [],
+      "proposedFutureDomainModule": "retain in src/visualization/brain",
+      "plannedMigrationWave": "NV-0 current-behavior seam; replacement deferred to later NV waves"
     }
   ]
 }

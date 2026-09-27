@@ -28,7 +28,7 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
   it('catalogues every non-metadata file under src with the required module fields', () => {
     expect(architecture.warning).toBe(warning);
     expect(architecture.modules.map((module: { path: string }) => module.path).sort()).toEqual(sourceFiles(path.join(root, 'src')));
-    expect(architecture.modules).toHaveLength(144);
+    expect(architecture.modules).toHaveLength(149);
     for (const module of architecture.modules) {
       expect(module).toEqual(expect.objectContaining({
         path: expect.any(String),
@@ -62,8 +62,8 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
 
   it('freezes the current runtime import graph and V1/V2 consumer counts', () => {
     expect(architecture.summary).toEqual(expect.objectContaining({
-      sourceFilesCatalogued: 144,
-      productionModulesCatalogued: 141,
+      sourceFilesCatalogued: 149,
+      productionModulesCatalogued: 146,
       buildTimeDiagnosticModules: 3,
       directV1ProductionConsumers: 14,
       directV2ProductionConsumers: 6,
@@ -71,7 +71,7 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
       transitiveV1ProductionConsumers: 19,
       transitiveV2ProductionConsumers: 11,
       transitiveDualProductionConsumers: 7,
-      pharmacologyDependencyModules: 44,
+      pharmacologyDependencyModules: 46,
       circularDependencyCount: 0,
       unresolvedInternalImportCount: 0,
       serverClientBoundaryRiskCount: 3,
@@ -94,7 +94,7 @@ describe('CURRENT ARCHITECTURE CHARACTERIZATION — NOT A TARGET ARCHITECTURE', 
     const catalog = JSON.parse(fs.readFileSync(path.join(root, 'docs/architecture/module-catalog.json'), 'utf8'));
     expect(catalog.warning).toBe(warning);
     expect(catalog.characterizationBaselineCommit).toBe('6d98af672fe9c7dc4a8709734fec9b8d9a10cd9b');
-    expect(catalog.workingTreeBaseCommit).toBe('657e5692c1e80e428dbf3bcf4b8e745ac0db226f');
+    expect(catalog.workingTreeBaseCommit).toBe('d3e5451c73b46849d203055ff0b7455e587e09a5');
     expect(catalog.characterizationBaselineCommit).toBe(architecture.characterizationBaselineCommit);
     expect(architecture.workingTreeBaseCommit).toBe(execFileSync('git', ['rev-parse', 'HEAD'], {
       cwd: root,
