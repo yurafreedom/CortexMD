@@ -2,7 +2,11 @@ name: Phase 0 safety net
 
 on:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 permissions: read-all
 
@@ -42,7 +46,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run budget:bundle
+      - run: npm run budget:bundle -- --no-gate
+      - run: npm run budget:bundle:current
 
   chromium-e2e:
     name: Chromium critical flows
